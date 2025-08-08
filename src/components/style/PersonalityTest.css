@@ -1,0 +1,86 @@
+.personality-test {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom right, #f0f9ff, #d0f0ff);
+  min-height: 100vh;
+  padding: 40px;
+}
+
+.test-background {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.test-heading {
+  font-size: 36px;
+  text-align: center;
+  color: #0077b6;
+  margin-bottom: 10px;
+}
+
+.test-subheading {
+  text-align: center;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.question-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.question-block {
+  background: #eaf8ff;
+  padding: 20px;
+  border-radius: 15px;
+  border-left: 5px solid #0077b6;
+}
+
+.question-block h3 {
+  color: #023e8a;
+  margin-bottom: 5px;
+}
+
+.options {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.options label {
+  background: #fff;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.options label:hover {
+  background-color: #caf0f8;
+}
+
+.submit-btn {
+  background-color: #0077b6;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 30px;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #023e8a;
+}
+
+
+
+
+
