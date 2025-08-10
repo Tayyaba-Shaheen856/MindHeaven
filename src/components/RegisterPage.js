@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 👈 added for navigation
+import { useNavigate } from 'react-router-dom';
 import './style/RegisterPage.css';
 
 const RegistrationPage = () => {
-  const navigate = useNavigate(); // 👈 hook for redirect
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
+    name: '', // Note: backend currently doesn't store name
     email: '',
     password: '',
     confirmPassword: '',
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
@@ -23,14 +25,40 @@ const RegistrationPage = () => {
       return;
     }
 
-    // 👇 yahan tum backend call bhi add kar sakti ho
-    console.log('User registered:', formData);
+    setLoading(true);
 
-    // Temporary: store in localStorage
-    localStorage.setItem('user', JSON.stringify(formData));
+    try {
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
-    // Redirect to test page
-    navigate('/test');
+      const data = await response.json();
+      setLoading(false);
+
+      if (!response.ok) {
+        alert(data.error || 'Registration failed');
+        return;
+      }
+
+      // Store token + user in localStorage
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      // Redirect to test page
+      navigate('/test');
+    } catch (error) {
+      console.error('Error registering:', error);
+      setLoading(false);
+      alert('Something went wrong. Please try again.');
+    }
   };
 
   return (
@@ -74,7 +102,9 @@ const RegistrationPage = () => {
             required
           />
 
-          <button type="submit">Register</button>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Registering...' : 'Register'}
+          </button>
         </form>
       </div>
     </div>

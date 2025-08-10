@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './style/PersonalityTest.css';
 
 const questions = [
@@ -74,21 +75,93 @@ const questions = [
 
 const PersonalityTest = () => {
   const [answers, setAnswers] = useState({});
+  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('');
+  const navigate = useNavigate();
 
+  // Load profile on mount
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    fetch('http://localhost:5000/api/profile', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.age) setAge(data.age);
+        if (data.gender) setGender(data.gender);
+        if (data.personality) {
+          // Pre-fill answers based on stored personality averages
+          const prefill = {};
+          questions.forEach((q) => {
+            if (data.personality[q.trait]) {
+              prefill[q.id] = Math.round(data.personality[q.trait]);
+            }
+          });
+          setAnswers(prefill);
+        }
+      })
+      .catch(err => console.error('Error loading profile:', err));
+  }, []);
+
+  // Handle answer selection
   const handleChange = (id, value) => {
-    setAnswers({ ...answers, [id]: parseInt(value) });
+    setAnswers((prev) => ({ ...prev, [id]: parseInt(value) }));
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submit
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!age || !gender) {
+      alert('Please fill out age and gender.');
+      return;
+    }
     if (Object.keys(answers).length !== questions.length) {
       alert('Please answer all questions.');
       return;
     }
 
-    // Replace this with navigation or API call later
-    alert('Test submitted! Redirecting to Recommendations...');
+    // Calculate averages for each trait
+    const traitScores = {};
+    questions.forEach((q) => {
+      if (!traitScores[q.trait]) traitScores[q.trait] = [];
+      traitScores[q.trait].push(answers[q.id]);
+    });
+    const traitAverages = {};
+    for (const trait in traitScores) {
+      traitAverages[trait] =
+        traitScores[trait].reduce((a, b) => a + b, 0) / traitScores[trait].length;
+    }
+
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch('http://localhost:5000/api/profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          age,
+          gender,
+          personality: traitAverages
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.error || 'Error saving profile');
+        return;
+      }
+
+      alert('Profile saved successfully!');
+      navigate('/recommendations');
+    } catch (err) {
+      console.error('Error saving profile:', err);
+      alert('Something went wrong.');
+    }
   };
 
   return (
@@ -100,6 +173,33 @@ const PersonalityTest = () => {
         </p>
 
         <form className="question-form" onSubmit={handleSubmit}>
+          {/* Age */}
+          <div className="question-block">
+            <h3>Age</h3>
+            <input
+              type="number"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Gender */}
+          <div className="question-block">
+            <h3>Gender</h3>
+            <select
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          {/* Personality Questions */}
           {questions.map((q) => (
             <div className="question-block" key={q.id}>
               <h3>{q.trait}</h3>
@@ -111,6 +211,7 @@ const PersonalityTest = () => {
                       type="radio"
                       name={`q-${q.id}`}
                       value={val}
+                      checked={answers[q.id] === val}
                       onChange={(e) => handleChange(q.id, e.target.value)}
                     />
                     {val}
@@ -121,7 +222,7 @@ const PersonalityTest = () => {
           ))}
 
           <button type="submit" className="submit-btn">
-            Get Recommendations
+            Save Profile & Get Recommendations
           </button>
         </form>
       </div>
