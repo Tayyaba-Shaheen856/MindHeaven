@@ -8,6 +8,7 @@ import RegisterPage from './components/RegisterPage';
 import LoginPage from './components/LoginPage';
 import ForgotPage from './components/ForgotPage';
 import ResetPasswordPage from './components/ResetPasswordPage';
+import MoodTrackingPage from './components/MoodTrackingPage';
 
 
 function App() {
@@ -17,11 +18,12 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/test" element={<PersonalityTest />} />
         <Route path="/recommendations" element={<RecommendationsPage />} />
-               <Route path="/register" element={<RegisterPage />} />
-               {/* <Route path="/profile" element={<ProfilePage />} /> */}
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/forgot" element={<ForgotPage />} />
-                <Route path="/resetpage" element={<ResetPasswordPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+          {/* <Route path="/profile" element={<ProfilePage />} /> */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/forgot" element={<ForgotPage />} />
+        <Route path="/resetpage" element={<ResetPasswordPage />} />
+        <Route path="/mood" element={<MoodTrackingPage />} />
 
 
       </Routes>
