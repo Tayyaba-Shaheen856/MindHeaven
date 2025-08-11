@@ -309,3 +309,50 @@ body {
   animation-delay: 11s;
 }
 /* Repeat for more if you have 20 bubbles */
+.header {
+ 
+  top: 0;
+  left: 0;
+ 
+  height: 70px;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.logo img {
+  height: 50px;
+  cursor: pointer;
+}
+
+/* Auth Buttons */
+.auth-btn {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn {
+  background-color: #ff4081;
+}
+
+.login-btn:hover {
+  background-color: #f50057;
+}
+
+.logout-btn {
+  background-color: #ff4081;
+}
+
+.logout-btn:hover {
+  background-color: #f50057;
+}
+
