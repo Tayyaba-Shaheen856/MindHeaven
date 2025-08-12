@@ -9,26 +9,30 @@ const LoginPage = () => {
     password: '',
   });
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(''); // error state
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrorMsg(''); // reset error jab user type kare
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMsg('');
 
     try {
       const res = await fetch('http://localhost:5000/api/auth/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData)
-});
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
       const data = await res.json();
       setLoading(false);
 
       if (!res.ok) {
-        alert(data.error || 'Login failed');
+        setErrorMsg(data.error || 'Invalid email or password');
         return;
       }
 
@@ -36,11 +40,10 @@ const LoginPage = () => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
 
-      alert('Login successful!');
       navigate('/personality');
     } catch (error) {
       console.error('Error logging in:', error);
-      alert('Something went wrong. Please try again.');
+      setErrorMsg('Something went wrong. Please try again.');
       setLoading(false);
     }
   };
@@ -68,6 +71,8 @@ const LoginPage = () => {
             required
           />
 
+          {errorMsg && <p className="error-text">{errorMsg}</p>} {/* error niche show */}
+
           <button type="submit" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </button>
@@ -78,7 +83,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-
-
-

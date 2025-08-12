@@ -356,3 +356,11 @@ body {
   background-color: #f50057;
 }
 
+.register-btn{
+background-color: #ff4081;
+}
+
+.register-btn:hover{
+background-color: #f50057;
+}
+
