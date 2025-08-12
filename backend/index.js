@@ -1,5 +1,7 @@
 require('dotenv').config();
-const axios = require('axios');
+console.log('MONGODB_URI:', process.env.MONGODB_URI);
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
+console.log('PORT:', process.env.PORT);
 
 const express = require('express');
 const cors = require('cors');
@@ -15,31 +17,51 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI, {
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://username:password@cluster.mongodb.net/database?retryWrites=true&w=majority';
+console.log("Connecting to MongoDB with URI:", MONGODB_URI);
+
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log('✅ Connected to MongoDB Atlas'))
-.catch(err => {
-  console.error('❌ MongoDB connection error:', err);
-  process.exit(1); // Stop if DB connection fails
-});
+.then(() => {
+  console.log('✅ Connected to MongoDB Atlas');
+  console.log('📂 Database Name:', mongoose.connection.name);
+  console.log('🌐 Cluster Host:', mongoose.connection.host);
+})
+.catch(err => console.error('❌ MongoDB connection error:', err));
+
+// =======================
+// Schemas
+// =======================
 
 // User Schema
-// Extend schema
 const userSchema = new mongoose.Schema({
-  name: { type: String, trim: true },
-  email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-  password: { type: String, required: true, minlength: 6 },
-  age: Number,
-  gender: String,
-  personality: mongoose.Schema.Types.Mixed // stores trait scores object
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 6
+  },
+  age: {
+    type: Number,
+    default: null
+  },
+  gender: {
+    type: String,
+    default: null
+  },
+  personality: {
+    type: String,
+    default: null
+  }
 }, { timestamps: true });
-
-// Profile route
-
-
-
 
 // Hash password before saving
 userSchema.pre('save', async function(next) {
@@ -60,160 +82,249 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
 
 const User = mongoose.model('User', userSchema);
 
-// JWT middleware
-function authenticateToken(req, res, next) {
-  const token = req.headers['authorization']?.split(' ')[1];
-  if (!token) return res.status(401).json({ error: 'Access token required' });
+// Mood Schema
+const moodSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  emoji: { type: String, required: true },
+  timestamp: { type: Date, default: Date.now }
+});
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ error: 'Invalid token' });
-    req.user = user;
-    next();
-  });
-}
+const Mood = mongoose.model('Mood', moodSchema);
 
+// =======================
 // Routes
+// =======================
+
 app.get('/', (req, res) => {
   res.json({ message: 'Express server with MongoDB is running!' });
 });
 
-app.post('/api/register', async (req, res) => {
+// Register route
+app.post('/api/auth/register', async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    if (await User.findOne({ email })) {
+    const { email, password } = req.body;
+    
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       return res.status(400).json({ error: 'User already exists' });
     }
-    const user = new User({ name, email, password });
+    
+    // Create new user
+    const user = new User({ email, password });
     await user.save();
+    
+    // Generate JWT token
     const token = jwt.sign(
       { userId: user._id, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
+    
     res.status(201).json({
       message: 'User created successfully',
       token,
-      user: { id: user._id, name: user.name, email: user.email }
+      user: { id: user._id, email: user.email }
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-
-app.post('/api/login', async (req, res) => {
+// Login route
+app.post('/api/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;
+    
+    // Find user
     const user = await User.findOne({ email });
-    if (!user || !(await user.comparePassword(password))) {
+    if (!user) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
-    const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '24h' });
-    res.json({ message: 'Login successful', token, user: { id: user._id, email: user.email } });
+    
+    // Check password
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+    
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+    
+    res.json({
+      message: 'Login successful',
+      token,
+      user: { id: user._id, email: user.email }
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
+// JWT middleware
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  
+  if (!token) {
+    return res.status(401).json({ error: 'Access token required' });
+  }
+  
+  jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key', (err, user) => {
+    if (err) {
+      return res.status(403).json({ error: 'Invalid token' });
+    }
+    req.user = user;
+    next();
+  });
+}
+
+// Profile update route
 app.post('/api/profile', authenticateToken, async (req, res) => {
   try {
     const { age, gender, personality } = req.body;
-    const updatedUser = await User.findByIdAndUpdate(
+
+    const user = await User.findByIdAndUpdate(
       req.user.userId,
       { age, gender, personality },
-      { new: true, select: '-password' }
-    );
-    res.json(updatedUser);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+      { new: true, runValidators: true }
+    ).select('-password');
 
-// Get profile (protected)
-app.get('/api/profile', authenticateToken, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.userId).select('-password');
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    res.json(user);
+
+    res.json({
+      message: 'Profile updated successfully',
+      user
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.get('/api/recommendations', authenticateToken, async (req, res) => {
+// Mood tracking route
+app.post('/api/mood', authenticateToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId);
-    if (!user || !user.personality) {
-      return res.status(400).json({ error: 'User profile or personality not found' });
+    const { emoji } = req.body;
+    if (!emoji) {
+      return res.status(400).json({ error: 'Emoji is required' });
     }
 
-    const traits = Object.entries(user.personality);
-    traits.sort((a, b) => b[1] - a[1]);
-    const topTraits = traits.slice(0, 2).map(t => t[0]);
+    const mood = new Mood({
+      userId: req.user.userId,
+      emoji
+    });
 
-    const traitToSubject = {
-      Openness: 'philosophy',
-      Conscientiousness: 'self-help',
-      Extraversion: 'adventure',
-      Agreeableness: 'relationships',
-      Neuroticism: 'psychology'
-    };
-
-    const traitToMusic = {
-      Openness: [
-        { title: 'Bohemian Rhapsody', artist: 'Queen' },
-        { title: 'Imagine', artist: 'John Lennon' }
-      ],
-      Conscientiousness: [
-        { title: 'Eye of the Tiger', artist: 'Survivor' },
-        { title: 'Stronger', artist: 'Kanye West' }
-      ],
-      Extraversion: [
-        { title: 'Happy', artist: 'Pharrell Williams' },
-        { title: 'Uptown Funk', artist: 'Mark Ronson ft. Bruno Mars' }
-      ],
-      Agreeableness: [
-        { title: 'Count on Me', artist: 'Bruno Mars' },
-        { title: 'What a Wonderful World', artist: 'Louis Armstrong' }
-      ],
-      Neuroticism: [
-        { title: 'Someone Like You', artist: 'Adele' },
-        { title: 'Let It Be', artist: 'The Beatles' }
-      ]
-    };
-
-    let allBooks = [];
-    for (const trait of topTraits) {
-      const subject = traitToSubject[trait] || 'fiction';
-      const response = await axios.get(
-        `https://openlibrary.org/search.json?subject=${encodeURIComponent(subject)}&limit=5`
-      );
-      const books = response.data.docs.map(book => ({
-        title: book.title,
-        author_name: book.author_name || [],
-        first_publish_year: book.first_publish_year,
-        subject
-      }));
-      allBooks = allBooks.concat(books);
-    }
-
-    // Music from top 2 traits
-    let music = [];
-    for (const trait of topTraits) {
-      music = music.concat(traitToMusic[trait] || []);
-    }
-
-    res.json({ books: allBooks, music });
+    await mood.save();
+    res.status(201).json({
+      message: 'Mood saved successfully',
+      mood
+    });
   } catch (error) {
-    console.error('Recommendation error:', error.message);
-    res.status(500).json({ error: 'Failed to fetch recommendations' });
+    res.status(500).json({ error: error.message });
   }
 });
 
+// Get all moods for the logged-in user
+app.get('/api/mood', authenticateToken, async (req, res) => {
+  try {
+    const moods = await Mood.find({ userId: req.user.userId }).sort({ timestamp: -1 });
+    res.json(moods);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
+const axios = require('axios');
 
+// Book recommendations route
+app.get('/api/recommendations', authenticateToken, async (req, res) => {
+  try {
+    // Step 1: Find the logged-in user
+    const user = await User.findById(req.user.userId);
+    if (!user || !user.personality) {
+      return res.status(400).json({ error: 'Personality not set in profile' });
+    }
+
+    // Step 2: Map personality to subject
+    const personalityToSubject = {
+      "Friendly": "fiction",
+      "Adventurous": "travel",
+      "Curious": "science",
+      "Romantic": "romance",
+      "Thoughtful": "philosophy"
+    };
+    const subject = personalityToSubject[user.personality] || "fiction";
+
+    // Step 3: Fetch books from Open Library
+    const response = await axios.get(`https://openlibrary.org/search.json?q=subject:${subject}`);
+    const books = response.data.docs.slice(0, 10).map(book => ({
+      title: book.title,
+      author: book.author_name ? book.author_name.join(", ") : "Unknown Author",
+      first_publish_year: book.first_publish_year || "N/A"
+    }));
+
+    // Step 4: Send recommendations
+    res.json({
+      personality: user.personality,
+      subject,
+      recommendations: books
+    });
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /api/recommendations - fetch books based on logged-in user's profile
+app.get('/api/recommendations', authenticateToken, async (req, res) => {
+  try {
+    // Find the logged-in user
+    const user = await User.findById(req.user.userId).select('personality');
+    if (!user || !user.personality) {
+      return res.status(400).json({ error: 'User profile incomplete. Please set your personality first.' });
+    }
+
+    // Map personality to book subject
+    const personalityToSubject = {
+      Friendly: 'fiction',
+      Adventurous: 'travel',
+      Curious: 'science',
+      Romantic: 'romance',
+      Creative: 'art',
+      Thoughtful: 'philosophy'
+    };
+
+    const subject = personalityToSubject[user.personality] || 'general';
+
+    // Fetch from Open Library
+    const axios = require('axios');
+    const response = await axios.get(`https://openlibrary.org/search.json?q=subject:${subject}`);
+
+    // Return top 10 recommendations
+    const books = response.data.docs.slice(0, 10).map(book => ({
+      title: book.title,
+      author: book.author_name ? book.author_name.join(', ') : 'Unknown',
+      first_publish_year: book.first_publish_year || 'N/A'
+    }));
+
+    res.json({
+      personality: user.personality,
+      subject,
+      recommendations: books
+    });
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Start server
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
