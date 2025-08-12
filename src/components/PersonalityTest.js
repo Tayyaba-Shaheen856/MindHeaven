@@ -2,6 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style/PersonalityTest.css';
 
+
+const traitEmojis = {
+  Openness: '🎨',
+  Conscientiousness: '📋',
+  Extraversion: '🎉',
+  Agreeableness: '🤝',
+  Neuroticism: '😬'
+};
 const questions = [
   // Openness
   {
@@ -73,62 +81,43 @@ const questions = [
   },
 ];
 
+
+
+
+
+const QUESTIONS_PER_PAGE = 4;
+
 const PersonalityTest = () => {
-  const [answers, setAnswers] = useState({});
+  const [step, setStep] = useState(0); // step 0 = age, step 1 = gender, rest are questions
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
+  const [answers, setAnswers] = useState({});
   const navigate = useNavigate();
 
-  // Load profile on mount
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) return;
+  const totalSteps = questions.length + 2; // +2 for age & gender
 
-    fetch('http://localhost:5000/api/profile', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.age) setAge(data.age);
-        if (data.gender) setGender(data.gender);
-        if (data.personality) {
-          // Pre-fill answers based on stored personality averages
-          const prefill = {};
-          questions.forEach((q) => {
-            if (data.personality[q.trait]) {
-              prefill[q.id] = Math.round(data.personality[q.trait]);
-            }
-          });
-          setAnswers(prefill);
-        }
-      })
-      .catch(err => console.error('Error loading profile:', err));
-  }, []);
+  const handleNext = (value) => {
+    if (step === 0) setAge(value);
+    else if (step === 1) setGender(value);
+    else {
+      const questionId = questions[step - 2].id;
+      setAnswers((prev) => ({ ...prev, [questionId]: value }));
+    }
 
-  // Handle answer selection
-  const handleChange = (id, value) => {
-    setAnswers((prev) => ({ ...prev, [id]: parseInt(value) }));
+    if (step < totalSteps - 1) {
+      setStep(step + 1);
+    } else {
+      handleSubmit();
+    }
   };
 
-  // Handle form submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!age || !gender) {
-      alert('Please fill out age and gender.');
-      return;
-    }
-    if (Object.keys(answers).length !== questions.length) {
-      alert('Please answer all questions.');
-      return;
-    }
-
-    // Calculate averages for each trait
+  const handleSubmit = async () => {
     const traitScores = {};
     questions.forEach((q) => {
       if (!traitScores[q.trait]) traitScores[q.trait] = [];
-      traitScores[q.trait].push(answers[q.id]);
+      traitScores[q.trait].push(Number(answers[q.id]));
     });
+
     const traitAverages = {};
     for (const trait in traitScores) {
       traitAverages[trait] =
@@ -137,7 +126,7 @@ const PersonalityTest = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/profile', {
+      await fetch('http://localhost:5000/api/profile', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -149,82 +138,74 @@ const PersonalityTest = () => {
           personality: traitAverages
         })
       });
-
-      const data = await res.json();
-      if (!res.ok) {
-        alert(data.error || 'Error saving profile');
-        return;
-      }
-
-      alert('Profile saved successfully!');
       navigate('/recommendations');
     } catch (err) {
       console.error('Error saving profile:', err);
-      alert('Something went wrong.');
     }
   };
 
-  return (
-    <div className="personality-test">
-      <div className="test-background">
-        <h1 className="test-heading">Big 5 Personality Test</h1>
-        <p className="test-subheading">
-          Answer all questions honestly for best recommendations!
-        </p>
+  // Progress percentage
+  const progress = Math.round(((step + 1) / totalSteps) * 100);
 
-        <form className="question-form" onSubmit={handleSubmit}>
-          {/* Age */}
-          <div className="question-block">
-            <h3>Age</h3>
+  return (
+    <div className="quiz-wrapper">
+      <div className="progress-bar">
+        <div className="progress-fill" style={{ width: `${progress}%` }} />
+      </div>
+
+      <div className="card">
+        {step === 0 && (
+          <>
+            <h2>How old are you?</h2>
             <input
               type="number"
+              placeholder="Enter age"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              required
             />
-          </div>
-
-          {/* Gender */}
-          <div className="question-block">
-            <h3>Gender</h3>
-            <select
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-              required
+            <button
+              className="next-btn"
+              onClick={() => age && handleNext(age)}
             >
-              <option value="">Select Gender</option>
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
+              Next ➡️
+            </button>
+          </>
+        )}
 
-          {/* Personality Questions */}
-          {questions.map((q) => (
-            <div className="question-block" key={q.id}>
-              <h3>{q.trait}</h3>
-              <p>{q.question}</p>
-              <div className="options">
-                {[1, 2, 3, 4, 5].map((val) => (
-                  <label key={val}>
-                    <input
-                      type="radio"
-                      name={`q-${q.id}`}
-                      value={val}
-                      checked={answers[q.id] === val}
-                      onChange={(e) => handleChange(q.id, e.target.value)}
-                    />
-                    {val}
-                  </label>
-                ))}
-              </div>
+        {step === 1 && (
+          <>
+            <h2>Select your gender</h2>
+            <div className="options-grid">
+              {['Female', 'Male', 'Other'].map((g) => (
+                <button
+                  key={g}
+                  className="option-btn"
+                  onClick={() => handleNext(g.toLowerCase())}
+                >
+                  {g}
+                </button>
+              ))}
             </div>
-          ))}
+          </>
+        )}
 
-          <button type="submit" className="submit-btn">
-            Save Profile & Get Recommendations
-          </button>
-        </form>
+        {step > 1 && step <= totalSteps - 1 && (
+          <>
+            <h3>{traitEmojis[questions[step - 2].trait]} {questions[step - 2].trait}</h3>
+            <p className="question-text">{questions[step - 2].question}</p>
+            <div className="options-grid">
+              {[1, 2, 3, 4, 5].map((val) => (
+                <button
+                  key={val}
+                  className={`option-btn ${answers[questions[step - 2].id] === val ? 'selected' : ''}`}
+                  onClick={() => handleNext(val)}
+                >
+                  {val}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

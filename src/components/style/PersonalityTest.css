@@ -1,86 +1,84 @@
-.personality-test {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom right, #f0f9ff, #d0f0ff);
+.quiz-wrapper {
+  background: linear-gradient(135deg, #ff758c, #ff7eb3, #8e44ad);
   min-height: 100vh;
-  padding: 40px;
-}
-
-.test-background {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 40px;
-  border-radius: 20px;
-  max-width: 900px;
-  margin: 0 auto;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-.test-heading {
-  font-size: 36px;
-  text-align: center;
-  color: #0077b6;
-  margin-bottom: 10px;
-}
-
-.test-subheading {
-  text-align: center;
-  color: #555;
-  margin-bottom: 30px;
-}
-
-.question-form {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
-  gap: 25px;
-}
-
-.question-block {
-  background: #eaf8ff;
   padding: 20px;
-  border-radius: 15px;
-  border-left: 5px solid #0077b6;
 }
 
-.question-block h3 {
-  color: #023e8a;
-  margin-bottom: 5px;
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 4px;
+  margin-bottom: 20px;
 }
 
-.options {
-  display: flex;
-  gap: 15px;
-  margin-top: 10px;
-}
-
-.options label {
+.progress-fill {
+  height: 8px;
   background: #fff;
-  padding: 10px 15px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  transition: 0.2s;
+  border-radius: 4px;
+  transition: width 0.3s ease;
 }
 
-.options label:hover {
-  background-color: #caf0f8;
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0px 10px 40px rgba(0,0,0,0.15);
+  animation: fadeIn 0.4s ease;
 }
 
-.submit-btn {
-  background-color: #0077b6;
-  color: white;
-  padding: 15px;
+.question-text {
+  font-size: 1.2rem;
+  margin: 20px 0;
+}
+
+.options-grid {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.option-btn {
+  background: #eee;
   border: none;
-  border-radius: 12px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 18px;
-  margin-top: 30px;
-  transition: background 0.3s ease;
+  transition: all 0.2s ease;
 }
 
-.submit-btn:hover {
-  background-color: #023e8a;
+.option-btn:hover {
+  background: #ffebf3;
 }
 
+.option-btn.selected {
+  background: #ff7eb3;
+  color: white;
+  font-weight: bold;
+  transform: scale(1.1);
+}
 
+.next-btn {
+  margin-top: 20px;
+  background: #ff7eb3;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
 
-
-
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -16,7 +16,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/test" element={<PersonalityTest />} />
+        <Route path="/personality" element={<PersonalityTest />} />
         <Route path="/recommendations" element={<RecommendationsPage />} />
         <Route path="/register" element={<RegisterPage />} />
           {/* <Route path="/profile" element={<ProfilePage />} /> */}
