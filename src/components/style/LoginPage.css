@@ -47,3 +47,19 @@ form button {
 form button:hover {
   background: #0056b3;
 }
+
+.login-options {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.link-text {
+  color: #007bff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.link-text:hover {
+  text-decoration: underline;
+}

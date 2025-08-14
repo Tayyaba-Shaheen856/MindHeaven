@@ -9,11 +9,11 @@ const LoginPage = () => {
     password: '',
   });
   const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState(''); // error state
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrorMsg(''); // reset error jab user type kare
+    setErrorMsg('');
   };
 
   const handleSubmit = async (e) => {
@@ -36,7 +36,6 @@ const LoginPage = () => {
         return;
       }
 
-      // Store JWT token + user in localStorage
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
 
@@ -71,15 +70,26 @@ const LoginPage = () => {
             required
           />
 
-          {errorMsg && <p className="error-text">{errorMsg}</p>} {/* error niche show */}
+          {errorMsg && <p className="error-text">{errorMsg}</p>}
 
           <button type="submit" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
+
+        {/* Extra options below form */}
+        <div className="login-options">
+          <p onClick={() => navigate('/forgot')} className="link-text">
+            Forgot Password?
+          </p>
+          <p onClick={() => navigate('/register')} className="link-text">
+            Create an Account
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
 export default LoginPage;
+

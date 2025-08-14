@@ -25,7 +25,7 @@ body {
   color: white;
   padding: 80px 20px;
   text-align: center;
-  animation: floating 6s ease-in-out infinite;
+
 }
 
 .hero-title {
@@ -325,7 +325,7 @@ body {
 }
 
 .logo img {
-  height: 50px;
+  height: 100px;
   cursor: pointer;
 }
 

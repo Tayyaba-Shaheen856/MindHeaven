@@ -63,7 +63,7 @@ const LandingPage = () => {
         </div>
       </header>
 
-      {/* Animated Background */}
+     
       <div className="animated-background">
         {[...Array(20)].map((_, i) => (
           <span key={i} className="bubble"></span>
