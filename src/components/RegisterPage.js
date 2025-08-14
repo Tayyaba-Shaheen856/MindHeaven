@@ -150,10 +150,19 @@ const RegistrationPage = () => {
 
     setLoading(true);
 
+<<<<<<< HEAD
     try {
       const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+=======
+                                                                  try {
+                                                                        const response = await fetch('https://upgraded-space-lamp-x5q9xvxq4p6qhvw55-5000.app.github.dev/api/register', {
+                                                                                method: 'POST',
+                                                                                        headers: {
+                                                                                                  'Content-Type': 'application/json',
+                                                                                                          },
+>>>>>>> a427266 (Update backend and components with latest changes)
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,

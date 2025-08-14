@@ -35,12 +35,22 @@ const questions = [
 
 const PersonalityTest = () => {
   const [step, setStep] = useState(0);
+<<<<<<< HEAD
   const [answers, setAnswers] = useState({});
   const navigate = useNavigate();
 
   const totalSteps = questions.length;
 
   // Calculate personality
+=======
+  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('');
+  const [answers, setAnswers] = useState({});
+  const navigate = useNavigate();
+
+  const totalSteps = questions.length + 2;
+
+>>>>>>> a427266 (Update backend and components with latest changes)
   const calculatePersonality = () => {
     const traitScores = {};
     questions.forEach(q => {
@@ -67,8 +77,17 @@ const PersonalityTest = () => {
   };
 
   const handleNext = (value) => {
+<<<<<<< HEAD
     const questionId = questions[step].id;
     setAnswers(prev => ({ ...prev, [questionId]: value }));
+=======
+    if (step === 0) setAge(value);
+    else if (step === 1) setGender(value);
+    else {
+      const questionId = questions[step - 2].id;
+      setAnswers(prev => ({ ...prev, [questionId]: value }));
+    }
+>>>>>>> a427266 (Update backend and components with latest changes)
 
     if (step < totalSteps - 1) {
       setStep(step + 1);
@@ -80,6 +99,7 @@ const PersonalityTest = () => {
   const handleSubmit = async () => {
     const personality = calculatePersonality();
     const token = localStorage.getItem('token');
+<<<<<<< HEAD
     const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
     sessionStorage.setItem('personalityJustSet', 'true');
@@ -87,12 +107,22 @@ const PersonalityTest = () => {
 
     try {
       const res = await fetch(`${API_URL}/api/auth/personality`, {
+=======
+    const API_URL = process.env.REACT_APP_API_URL || 'https://upgraded-space-lamp-x5q9xvxq4p6qhvw55-5000.app.github.dev';
+
+    try {
+      const res = await fetch(`${API_URL}/api/profile`, {
+>>>>>>> a427266 (Update backend and components with latest changes)
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
+<<<<<<< HEAD
         body: JSON.stringify({ personality })
+=======
+        body: JSON.stringify({ age, gender, personality })
+>>>>>>> a427266 (Update backend and components with latest changes)
       });
 
       if (!res.ok) {
@@ -120,9 +150,39 @@ const PersonalityTest = () => {
       <div className="card">
         {step < totalSteps && (
           <>
+<<<<<<< HEAD
             <h3>{traitEmojis[questions[step].trait]} {questions[step].trait}</h3>
             <p className="question-text">{questions[step].question}</p>
             <div className="options-grid">
+=======
+            <h2>How old are you?</h2>
+            <input
+              type="number"
+              placeholder="Enter age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+            />
+            <button className="next-btn" onClick={() => age && handleNext(age)}>Next ➡️</button>
+          </>
+        )}
+
+        {step === 1 && (
+          <>
+            <h2>Select your gender</h2>
+            <div className="options-grid">
+              {['Female', 'Male', 'Other'].map(g => (
+                <button key={g} className="option-btn" onClick={() => handleNext(g.toLowerCase())}>{g}</button>
+              ))}
+            </div>
+          </>
+        )}
+
+        {step > 1 && step <= totalSteps - 1 && (
+          <>
+            <h3>{traitEmojis[questions[step - 2].trait]} {questions[step - 2].trait}</h3>
+            <p className="question-text">{questions[step - 2].question}</p>
+            <div className="options-grid">
+>>>>>>> a427266 (Update backend and components with latest changes)
               {[1, 2, 3, 4, 5].map(val => (
                 <button
                   key={val}

@@ -13,9 +13,8 @@ const PORT = process.env.PORT || 5000;
 
 // =======================
 // Middleware
-// =======================
 app.use(cors({
-  origin: 'http://localhost:3000', // React frontend
+  origin: process.env.FRONTEND_URL || '*', // Frontend URL from env
   credentials: true
 }));
 app.use(express.json());
@@ -75,10 +74,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'API is running' });
 });
 
-
-
-// register
-app.post('/api/auth/register', async (req, res) => {
+// Register route
+app.post('/api/register', async (req, res) => {
   try {
     const { email, password, age, gender, dateOfBirth } = req.body;
 
@@ -121,9 +118,8 @@ app.post('/api/auth/register', async (req, res) => {
   }
 });
 
-
-//login
-app.post('/api/auth/login', async (req, res) => {
+// Login route
+app.post('/api/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });

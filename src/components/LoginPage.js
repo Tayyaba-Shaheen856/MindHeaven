@@ -22,7 +22,7 @@ const LoginPage = () => {
     setErrorMsg('');
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch('https://upgraded-space-lamp-x5q9xvxq4p6qhvw55-5000.app.github.dev/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
