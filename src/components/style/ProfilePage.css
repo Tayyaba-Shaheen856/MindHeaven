@@ -1,4 +1,4 @@
-.registration-page {
+/* .registration-page {
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -48,4 +48,66 @@ form button {
 
 form button:hover {
   background: #0056b3;
+} */
+
+
+.profile-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  padding: 20px;
+}
+
+.form-container {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.form-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.profile-page form input, 
+.profile-page form select {
+  width: 90% !important;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.profile-page form select{
+   width: 96% !important;
+}
+
+ .profile-page form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.profile-page form button {
+  width: 90%;
+  padding: 12px;
+  background: linear-gradient(45deg, #ff6ec4, #7873f5);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.profile-page form button:hover {
+  background: linear-gradient(45deg, #ff4db8, #5f57e3);
 }

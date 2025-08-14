@@ -9,6 +9,7 @@ import LoginPage from './components/LoginPage';
 import ForgotPage from './components/ForgotPage';
 import ResetPasswordPage from './components/ResetPasswordPage';
 import MoodTrackingPage from './components/MoodTrackingPage';
+import ProfilePage from './components/ProfilePage';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/forgot" element={<ForgotPage />} />
         <Route path="/resetpage" element={<ResetPasswordPage />} />
         <Route path="/mood" element={<MoodTrackingPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
 
 
       </Routes>

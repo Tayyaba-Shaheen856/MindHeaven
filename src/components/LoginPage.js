@@ -39,7 +39,7 @@ const LoginPage = () => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
 
-      navigate('/personality');
+      navigate('/profile');
     } catch (error) {
       console.error('Error logging in:', error);
       setErrorMsg('Something went wrong. Please try again.');
