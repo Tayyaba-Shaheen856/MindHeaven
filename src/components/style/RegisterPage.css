@@ -1,10 +1,12 @@
-.registration-page {
+.register-page {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom right, #a1c4fd, #c2e9fb);
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
   padding: 20px;
+  margin: 0 auto !important;
+  font-family: 'Poppins', sans-serif;
 }
 
 .form-container {
@@ -13,37 +15,51 @@
   border-radius: 15px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   text-align: center;
 }
 
 .form-container h2 {
   margin-bottom: 25px;
   color: #333;
+  text-align: center;
 }
 
-form input {
-  width: 90%;
+.register-page form input,
+.register-page form select {
+  width: 90% !important;
   padding: 12px 15px;
   margin: 10px 0;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 16px;
+  box-sizing: border-box;
 }
 
-form button {
-  width: 98%;
+.register-page form select {
+  width: 90% !important;
+}
+
+.register-page form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.register-page form button {
+  width: 90%;
   padding: 12px;
-  background: #007bff;
+  background: linear-gradient(45deg, #ff6ec4, #7873f5) !important;
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 16px;
-  margin-top: 10px;
+  margin-top: 15px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: 0.3s ease;
 }
 
-form button:hover {
-  background: #0056b3;
+.register-page form button:hover {
+  background: linear-gradient(45deg, #ff4db8, #5f57e3);
 }

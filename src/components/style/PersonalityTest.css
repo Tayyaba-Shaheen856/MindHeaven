@@ -1,5 +1,5 @@
 .quiz-wrapper {
-  background: linear-gradient(135deg, #ff758c, #ff7eb3, #8e44ad);
+ background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -18,7 +18,7 @@
 
 .progress-fill {
   height: 8px;
-  background: #fff;
+ background: linear-gradient(45deg, #ff4db8, #5f57e3);
   border-radius: 4px;
   transition: width 0.3s ease;
 }
@@ -33,10 +33,14 @@
   box-shadow: 0px 10px 40px rgba(0,0,0,0.15);
   animation: fadeIn 0.4s ease;
 }
+.card h3{
+  color:black;
+}
 
 .question-text {
   font-size: 1.2rem;
   margin: 20px 0;
+  color:black;
 }
 
 .options-grid {
@@ -57,26 +61,16 @@
 }
 
 .option-btn:hover {
-  background: #ffebf3;
+     background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
 }
 
 .option-btn.selected {
-  background: #ff7eb3;
+ background: linear-gradient(45deg, #ff4db8, #5f57e3) !important;
   color: white;
   font-weight: bold;
   transform: scale(1.1);
 }
 
-.next-btn {
-  margin-top: 20px;
-  background: #ff7eb3;
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-}
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }

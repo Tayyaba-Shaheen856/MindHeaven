@@ -32,14 +32,15 @@ const LoginPage = () => {
       setLoading(false);
 
       if (!res.ok) {
-        setErrorMsg(data.error || 'Invalid email or password');
+        // Sirf red message show karein
+        setErrorMsg(data.error || 'Wrong email or password.');
         return;
       }
 
+      // Successful login
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
-
-      navigate('/profile');
+      navigate('/personality');
     } catch (error) {
       console.error('Error logging in:', error);
       setErrorMsg('Something went wrong. Please try again.');
@@ -70,14 +71,15 @@ const LoginPage = () => {
             required
           />
 
-          {errorMsg && <p className="error-text">{errorMsg}</p>}
+          {errorMsg && (
+            <p className="error-text">{errorMsg}</p>
+          )}
 
           <button type="submit" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
-        {/* Extra options below form */}
         <div className="login-options">
           <p onClick={() => navigate('/forgot')} className="link-text">
             Forgot Password?
@@ -92,4 +94,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-

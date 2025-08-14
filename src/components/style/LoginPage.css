@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom right, #a1c4fd, #c2e9fb);
+   background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
   padding: 20px;
 }
 
@@ -34,7 +34,7 @@ form input {
 form button {
   width: 98%;
   padding: 12px;
-  background: #007bff;
+  background: linear-gradient(45deg, #ff4db8, #5f57e3);
   color: white;
   border: none;
   border-radius: 8px;
@@ -44,9 +44,7 @@ form button {
   transition: background 0.3s ease;
 }
 
-form button:hover {
-  background: #0056b3;
-}
+
 
 .login-options {
   margin-top: 15px;
@@ -62,4 +60,16 @@ form button:hover {
 
 .link-text:hover {
   text-decoration: underline;
+}
+.error-text {
+  color: red;
+  margin: 10px 0;
+  font-weight: 600;
+}
+
+.link-text {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 5px;
 }

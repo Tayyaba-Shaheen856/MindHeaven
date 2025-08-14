@@ -1,19 +1,16 @@
-
-
 import React, { useEffect, useState } from 'react';
 import './style/LandingPage.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Backend se check karna ke user logged in hai ya nahi
     const checkAuth = async () => {
       try {
         const res = await fetch('http://localhost:5000/api/auth/check', {
-          credentials: 'include', // cookie/session ke liye
+          credentials: 'include',
         });
         const data = await res.json();
         setIsLoggedIn(data.loggedIn);
@@ -39,7 +36,7 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="landing-page">
+    <div className="landing-page gradient-background">
       {/* Header */}
       <header className="header">
         <div className="logo" onClick={() => navigate('/')}>
@@ -63,12 +60,7 @@ const LandingPage = () => {
         </div>
       </header>
 
-     
-      <div className="animated-background">
-        {[...Array(20)].map((_, i) => (
-          <span key={i} className="bubble"></span>
-        ))}
-      </div>
+      
 
       {/* Hero Section */}
       <section className="hero">
@@ -97,17 +89,6 @@ const LandingPage = () => {
             <h3>Movies</h3>
             <p>Enjoy movie picks that align with your personality and preferences.</p>
           </div>
-        </div>
-      </section>
-
-      {/* Registration CTA */}
-      <section className="registration-teaser">
-        <div className="registration-teaser-content">
-          <h2>Join Now</h2>
-          <p>Sign up to unlock personalized content, save your progress, and more!</p>
-          <Link to="/register" className="hero-btn">
-            Register Today
-          </Link>
         </div>
       </section>
 
@@ -142,3 +123,4 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+

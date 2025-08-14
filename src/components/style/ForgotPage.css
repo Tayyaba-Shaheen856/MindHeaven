@@ -10,10 +10,11 @@
 .forgot-container h2 {
   text-align: center;
   margin-bottom: 20px;
+  color:black;
 }
 
 .forgot-container input {
-  width: 95%;
+  width: 93%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ddd;
@@ -21,9 +22,9 @@
 }
 
 .forgot-container button {
-  width: 40%;
+  width: 98%;
   padding: 10px;
-  background: #007bff;
+ background: linear-gradient(45deg, #ff4db8, #5f57e3);
   border: none;
   color: #fff;
   border-radius: 5px;
@@ -31,6 +32,4 @@
   cursor: pointer;
 }
 
-.forgot-container button:hover {
-  background: #0056b3;
-}
+
