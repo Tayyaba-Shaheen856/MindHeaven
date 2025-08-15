@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './style/RecommendationsPage.css';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const recommendations = () => {
   const [recommendations, setRecommendations] = useState([]);
 =======
@@ -36,10 +37,17 @@ const RecommendationsPage = () => {
   const [error, setError] = useState('');
   const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
   const token = localStorage.getItem('token');
+=======
+const Recommendations = () => {
+  const [recommendations, setRecommendations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+>>>>>>> 5d18cdf (Save local changes before syncing with remote)
 
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
+<<<<<<< HEAD
         const res = await fetch(`${API_URL}/api/auth/recommendations`, {
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -66,24 +74,76 @@ const RecommendationsPage = () => {
         const personality = data.personality || 'Friendly';
         const recommendations = data.recommendations || personalityToRecommendations[personality] || [];
         const musicData = data.music || [];
+=======
+        const token = localStorage.getItem('token');
+        if (!token) {
+          setError('You must be logged in to view recommendations.');
+          setLoading(false);
+          return;
+        }
 
-        setBooks(recommendations);
-        setMusic(musicData);
+        // Use backend URL from .env or fallback to Codespaces URL
+        const backendUrl = process.env.REACT_APP_API_URL || 
+          'https://upgraded-space-lamp-x5q9xvxq4p6qhvw55-5000.app.github.dev';
+>>>>>>> 5d18cdf (Save local changes before syncing with remote)
 
+        const res = await fetch(`${backendUrl}/api/recommendations`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+<<<<<<< HEAD
         const traits = [...new Set(recommendations.map(book => book.subject))];
         setTopTraits(traits);
 >>>>>>> a427266 (Update backend and components with latest changes)
+=======
+        // Read as text first to detect HTML errors
+        const text = await res.text();
+
+        if (text.startsWith('<!DOCTYPE html>')) {
+          throw new Error('Backend fetch failed. Received HTML instead of JSON. Check your backend URL.');
+        }
+
+        const data = JSON.parse(text);
+
+        if (!res.ok) {
+          throw new Error(data.error || 'Failed to fetch recommendations');
+        }
+
+        setRecommendations(data.recommendations || []);
+      } catch (err) {
+        console.error('Error fetching recommendations:', err);
+        setError(err.message);
+      } finally {
+>>>>>>> 5d18cdf (Save local changes before syncing with remote)
         setLoading(false);
       }
     };
 
     fetchRecommendations();
+<<<<<<< HEAD
   }, [API_URL, token]);
+=======
+  }, []);
+>>>>>>> 5d18cdf (Save local changes before syncing with remote)
 
-  if (loading) return <p className="loading">Loading recommendations...</p>;
-  if (error) return <p className="error">{error}</p>;
+  if (loading) {
+    return (
+      <div className="recommendations-wrapper">
+        <p>Loading recommendations...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="recommendations-wrapper">
+        <p style={{ color: 'red' }}>{error}</p>
+      </div>
+    );
+  }
 
   return (
+<<<<<<< HEAD
     <div className="recommendations-container">
       <div className="recommendations-header">
         <h1>Your Personalized Recommendations 🎯</h1>
@@ -114,18 +174,24 @@ const RecommendationsPage = () => {
           </p>
         )}
       </header>
+=======
+    <div className="recommendations-wrapper">
+      <h1>Here's what we think you'll like! 🎯</h1>
+      <p>Based on your top traits:</p>
+>>>>>>> 5d18cdf (Save local changes before syncing with remote)
 
-      {/* Book Recommendations */}
-      <div className="book-grid">
-        {books.map((book, idx) => (
-          <div key={idx} className="book-card">
-            <div className={`trait-label ${book.subject}`}>{book.subject}</div>
+      <div className="recommendations-grid">
+        {recommendations.map((book, idx) => (
+          <div className="recommendation-card" key={idx}>
             <h3>{book.title}</h3>
-            <p className="author">{book.author || 'Unknown Author'}</p>
-            {book.first_publish_year && <p className="year">First Published: {book.first_publish_year}</p>}
+            <p>{book.author}</p>
+            <p className="publish-year">
+              First Published: {book.first_publish_year || 'N/A'}
+            </p>
           </div>
         ))}
       </div>
+<<<<<<< HEAD
 
       {/* Music Recommendations */}
       {music.length > 0 && (
@@ -142,8 +208,14 @@ const RecommendationsPage = () => {
         </div>
       )}
 >>>>>>> a427266 (Update backend and components with latest changes)
+=======
+>>>>>>> 5d18cdf (Save local changes before syncing with remote)
     </div>
   );
 };
 
+<<<<<<< HEAD
 export default recommendations;
+=======
+export default Recommendations;
+>>>>>>> 5d18cdf (Save local changes before syncing with remote)

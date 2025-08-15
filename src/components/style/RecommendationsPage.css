@@ -1,12 +1,21 @@
+<<<<<<< HEAD
 .recommendations-container {
   padding: 2rem;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+=======
+.recommendations-wrapper {
+>>>>>>> 5d18cdf (Save local changes before syncing with remote)
   min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #e0f7fa, #fce4ec);
+  font-family: 'Poppins', sans-serif;
 }
 
-.recommendations-header {
+/* Heading */
+.page-title {
   text-align: center;
+<<<<<<< HEAD
   margin-bottom: 2rem;
 }
 
@@ -19,10 +28,45 @@
 .top-traits {
   font-size: 1rem;
   color: #000;
+=======
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+>>>>>>> 5d18cdf (Save local changes before syncing with remote)
 }
 
-.book-grid {
+/* Tabs */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.tab-btn {
+  background: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tab-btn:hover {
+  background: #ffebee;
+}
+
+.tab-btn.active {
+  background: #ff80ab;
+  color: white;
+}
+
+/* Grid for cards */
+.recommendations-grid {
   display: grid;
+<<<<<<< HEAD
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
 }
@@ -34,32 +78,57 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   text-align: center;
+=======
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  padding: 10px;
 }
 
-.book-card:hover {
+/* Recommendation card */
+.recommendation-card {
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  transition: 0.3s;
+>>>>>>> 5d18cdf (Save local changes before syncing with remote)
+}
+
+.recommendation-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
 }
 
-.book-card h3 {
+.recommendation-card h3 {
   font-size: 1.1rem;
-  color: #222;
-  margin-bottom: 0.5rem;
+  margin-bottom: 8px;
 }
 
 .author {
+<<<<<<< HEAD
   font-size: 0.95rem;
   color: #666;
   margin-bottom: 0.3rem;
+=======
+  font-size: 0.9rem;
+  color: #555;
+>>>>>>> 5d18cdf (Save local changes before syncing with remote)
 }
 
 .year {
   font-size: 0.85rem;
-  color: #999;
+  color: #888;
 }
 
+<<<<<<< HEAD
 .loading, .error {
   text-align: center;
   font-size: 1.2rem;
   color: #555;
 }
+=======
+/* Loading */
+.loading-text {
+  text-align: center;
+  font-size: 1.2rem;}
+>>>>>>> 5d18cdf (Save local changes before syncing with remote)
