@@ -1,0 +1,63 @@
+.mood-page {
+  min-height: 100vh;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.5s ease;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.mood-section, .journal-section {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+select, input[type="text"], textarea {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+textarea {
+  width: 400px;
+  height: 120px;
+  resize: vertical;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  background-color: #4dd0e1;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #ff80ab;
+}
+
+.entries-section {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.entries-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.entries-section li {
+  background: rgba(255,255,255,0.7);
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-radius: 10px;
+}

@@ -22,25 +22,25 @@ const LoginPage = () => {
     setErrorMsg('');
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(formData),
+});
 
       const data = await res.json();
       setLoading(false);
 
       if (!res.ok) {
-        // Sirf red message show karein
-        setErrorMsg(data.error || 'Wrong email or password.');
+        setErrorMsg(data.error || 'Invalid email or password');
         return;
       }
 
-      // Successful login
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
-      navigate('/personality');
+
+      // Navigate to dashboard instead of personality
+      navigate('/dashboard/*');
     } catch (error) {
       console.error('Error logging in:', error);
       setErrorMsg('Something went wrong. Please try again.');
@@ -61,7 +61,6 @@ const LoginPage = () => {
             onChange={handleChange}
             required
           />
-
           <input
             type="password"
             name="password"
@@ -70,24 +69,11 @@ const LoginPage = () => {
             onChange={handleChange}
             required
           />
-
-          {errorMsg && (
-            <p className="error-text">{errorMsg}</p>
-          )}
-
+          {errorMsg && <p className="error-text">{errorMsg}</p>}
           <button type="submit" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-
-        <div className="login-options">
-          <p onClick={() => navigate('/forgot')} className="link-text">
-            Forgot Password?
-          </p>
-          <p onClick={() => navigate('/register')} className="link-text">
-            Create an Account
-          </p>
-        </div>
       </div>
     </div>
   );

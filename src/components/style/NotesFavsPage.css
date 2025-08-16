@@ -1,0 +1,98 @@
+.notes-favs-page {
+  min-height: 100vh;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ffecb3, #b2dfdb);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.controls input[type="text"] {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 250px;
+}
+
+.controls select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Add note */
+.add-note {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.add-note input[type="text"] {
+  width: 300px;
+  margin-right: 8px;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  background-color: #4dd0e1;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #ff80ab;
+}
+
+/* Items display */
+.items-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.note-card, .fav-card {
+  background: rgba(255,255,255,0.85);
+  padding: 15px;
+  border-radius: 12px;
+  width: 80%;
+  max-width: 500px;
+  text-align: left;
+}
+
+.note-card p, .fav-card a {
+  margin: 0 0 5px 0;
+  word-break: break-word;
+  text-decoration: none;
+  color: #333;
+}
+
+.fav-card a:hover {
+  text-decoration: underline;
+  color: #4dd0e1;
+}
+
+small {
+  font-size: 0.75rem;
+  color: #555;
+}
+
+.empty {
+  text-align: center;
+  color: #888;
+  font-size: 1rem;
+}

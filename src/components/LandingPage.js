@@ -1,39 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './style/LandingPage.css';
 import { useNavigate } from 'react-router-dom';
 
+
 const LandingPage = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch('http://localhost:5000/api/auth/check', {
-          credentials: 'include',
-        });
-        const data = await res.json();
-        setIsLoggedIn(data.loggedIn);
-      } catch (err) {
-        console.error(err);
-        setIsLoggedIn(false);
-      }
-    };
-    checkAuth();
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      await fetch('http://localhost:5000/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include',
-      });
-      setIsLoggedIn(false);
-      navigate('/');
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   return (
     <div className="landing-page gradient-background">
@@ -43,28 +14,24 @@ const LandingPage = () => {
           <img src="/images/logo.png" alt="Logo" />
         </div>
         <div className="header-buttons">
-          {isLoggedIn ? (
-            <button className="auth-btn logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          ) : (
-            <>
-              <button className="auth-btn register-btn" onClick={() => navigate('/register')}>
-                Register
-              </button>
-              <button className="auth-btn login-btn" onClick={() => navigate('/login')}>
-                Login
-              </button>
-            </>
-          )}
+          <button
+            className="auth-btn register-btn"
+            onClick={() => navigate('/register')}
+          >
+            Register
+          </button>
+          <button
+            className="auth-btn login-btn"
+            onClick={() => navigate('/login')}
+          >
+            Login
+          </button>
         </div>
       </header>
 
-      
-
       {/* Hero Section */}
       <section className="hero">
-        <h1 className="hero-title">Discover Yourself</h1>
+        <h1 className="hero-title">Find the Real You</h1>
         <p className="hero-subtitle">
           Get personalized recommendations based on your unique personality.
         </p>
@@ -123,4 +90,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
