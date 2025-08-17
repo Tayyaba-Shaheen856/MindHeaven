@@ -39,10 +39,12 @@ function App() {
           path="/dashboard/*"
           element={token ? <Dashboard /> : <Navigate to="/login" />}
         />
-        <Route
+        {/* <Route
           path="/reset-password"
           element={token ? <ResetPasswordPage /> : <Navigate to="/login" />}
-        />
+        /> */}
+
+        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         {/* Redirect unknown routes */}
         <Route path="*" element={<Navigate to="/" />} />
 

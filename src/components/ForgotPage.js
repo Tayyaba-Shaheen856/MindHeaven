@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style/ForgotPage.css";
-const API_URL = process.env.REACT_APP_API_URL;
+
 function ForgotPage() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -17,7 +17,7 @@ function ForgotPage() {
     }
 
     try {
-      const res = await fetch(`${API_URL}/api/auth/forgot`, {
+      const res = await fetch("http://localhost:5000/api/auth/forgot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -31,7 +31,13 @@ function ForgotPage() {
       }
 
       setMessage(data.message);
-      // Reset page par navigate karna
+
+      // 👇 Save token in localStorage for ResetPasswordPage
+      if (data.token) {
+        localStorage.setItem("resetToken", data.token);
+      }
+
+      // Navigate to reset password page
       navigate("/resetpage");
     } catch (err) {
       console.error(err);

@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./style/ResetPasswordPage.css";
-const API_URL = process.env.REACT_APP_API_URL;
+
 function ResetPassword() {
+  const navigate = useNavigate();
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
 
-  const token = searchParams.get("token"); // URL se token
+  // 👇 Get token from localStorage instead of URL
+  const token = localStorage.getItem("resetToken");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,11 +21,16 @@ function ResetPassword() {
       return;
     }
 
+    if (!token) {
+      setMessage("No reset token found. Please request a new one.");
+      return;
+    }
+
     try {
-      const res = await fetch(`${API_URL}/api/auth/reset`, {
+      const res = await fetch(`http://localhost:5000/api/auth/reset-password/${token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password, token }),
+        body: JSON.stringify({ password }),
       });
 
       const data = await res.json();
@@ -38,7 +44,10 @@ function ResetPassword() {
       setPassword("");
       setConfirmPassword("");
 
-      // Password reset ke baad login page par navigate karna
+      // clear token from localStorage after successful reset
+      localStorage.removeItem("resetToken");
+
+      // Navigate to login page after successful reset
       setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
       console.error(err);

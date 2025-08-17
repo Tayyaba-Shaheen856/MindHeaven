@@ -1,13 +1,8 @@
-/* =========================
-   Global
-========================= */
 body {
-  background: linear-gradient(135deg, #EEB8E9, #A9B9EC);
   min-height: 100vh;
-  color: #333;
   margin: 0;
   padding: 0;
- font-family: 'Playfair Display', 'Poppins', sans-serif;
+  font-family: 'IvyMode', 'Times New Roman', serif;
   overflow-x: hidden;
 }
 
@@ -15,11 +10,10 @@ body {
    Header
 ========================= */
 .header {
-  position: sticky;
   top: 0;
   left: 0;
   height: 70px;
-  background: rgba(255, 255, 255, 0.95);
+  background: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -57,50 +51,219 @@ body {
 .login-btn,
 .register-btn,
 .logout-btn {
-  background: linear-gradient(45deg, #ff6ec4, #7873f5);
+  background: linear-gradient(180deg, #CC6F5F, #F3C3A2);
+  color: #0B3C47;
+  font-family: 'IvyMode', 'Times New Roman', serif;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 /* =========================
    Hero Section
 ========================= */
-/* .hero {
-  background: linear-gradient(135deg, #EEB8E9, #A9B9EC);
-  color: #333;
-  padding: 100px 20px 60px 20px;
-  text-align: center;
-} */
 .hero {
-  height:350px;
-  position: relative;
-  color: black;
-  padding: 100px 20px 60px 20px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: #0B3C47;
+  color: #EBC3A0;
+  padding: 0 100px;
   text-align: center;
-
-  /* Background image with right-to-left overlay */
-  background-image: 
-    linear-gradient(to left, rgba(236, 111, 204 ,0.9 )45%, rgba(236, 111, 204, 0.1) 50%, rgba(236, 111, 204, 0) 100%),
-    url('/public/images/hero.jpg');
-  background-size: cover;
-  background-position: right center;
-  background-repeat: no-repeat;
+  position: relative;
 }
+
+.hero-content {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .hero-title {
-  font-size: 55px;
+  font-size: 45px;
   font-weight: bold;
-  margin-bottom: 20px;
-   font-family: 'Playfair Display', 'Poppins', sans-serif;
- 
+  margin-bottom: 15px;
+  font-family: 'IvyMode', 'Times New Roman', serif;
+  line-height: 1.2;
 }
 
 .hero-subtitle {
-  font-size: 1.2rem;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.4;
   margin-bottom: 30px;
+  color: #EBC3A0;
+  font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+}
+
+/* Hero Badge */
+.hero-badge img {
+  margin-top: 30px;
+  width: 100%;
+  height: 450px;
+}
+
+/* =========================
+   About Us Section
+========================= */
+.about-us {
+  padding: 60px 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  text-align: center;
+  position: relative;
+}
+
+.heading {
+  font-size: 22px;
+  font-weight: bold;
+  font-family: 'IvyMode', 'Times New Roman', serif;
+color:#CC6F5F;
+  margin: 0; /* no extra gap */
+}
+
+.about-us-content {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: start;
+  gap: 12px;
+}
+
+.about-us-title {
+  font-size: 38px;
+  font-weight: bold;
+  margin: 5px 0 10px; /* reduce gap */
+  font-family: 'IvyMode', 'Times New Roman', serif;
+  line-height: 1.2;
+  color: #0B3C47;
+}
+
+.about-us-subtitle {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 15px; /* less bottom gap */
+  color: #333;
+  font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  text-align: left;
+}
+
+/* About Us Bullet Points */
+.about-us-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.about-us-list li {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+}
+
+/* About Us Image */
+.about-us .image {
+  width: 50%;
+}
+.about-us .image img {
+  margin-top: 20px;
+  width: 100%;
+  height: 420px;
+  object-fit: contain;
+}
+
+/* =========================
+   Why Choose Us Section
+========================= */
+.why-choose-us {
+  background: #0B3C47; /* same as hero */
+  padding: 80px 20px;
+  text-align: center;
+  color: #EBC3A0;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.why-choose-us h2 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  color: #EBC3A0;
+  font-family: 'IvyMode', 'Times New Roman', serif;
+}
+.why-choose-us p{
+font-size:16px;
+  padding: 0 15px 20px;
+   color: #EBC3A0;
+  font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  line-height: 1.4em;
+}
+.feature-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.2);
+  width: 260px;
+  padding: 30px 20px;
+  border-radius: 20px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2); /* softer */
+  text-align: center;
+  transition: transform 0.3s ease;
+  border:1px solid #EBC3A0;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+}
+
+.feature-card img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #EBC3A0;
+}
+
+.feature-card h4 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #EBC3A0;
+  font-family: 'IvyMode', 'Times New Roman', serif;
+}
+
+.feature-card p {
+  font-size: 1rem;
+  color: #f1e3d3;
+  line-height: 1.4;
 }
 
 /* =========================
    Recommendations Section
 ========================= */
 .recommendations {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 60px 20px;
   background: #ffffff;
   text-align: center;
@@ -109,10 +272,16 @@ body {
 .recommendations h2 {
   font-size: 2.2rem;
   margin-bottom: 40px;
-  color: #333;
-   font-family: 'Playfair Display', 'Poppins', sans-serif;
+  color: #0B3C47;
+font-family: 'IvyMode', 'Times New Roman', serif;
 }
-
+.recommendations p{
+font-size:16px;
+  padding: 0 15px 20px;
+   color: #333;
+  font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  line-height: 1.4em;
+}
 .recommendation-cards {
   display: flex;
   flex-wrap: wrap;
@@ -121,7 +290,7 @@ body {
 }
 
 .recommendation-card {
-  background: #f5f5f5;
+  background: #EBC3A0;
   width: 280px;
   border-radius: 15px;
   overflow: hidden;
@@ -140,91 +309,165 @@ body {
 }
 
 .recommendation-card h3 {
-  font-size: 1.2rem;
+  font-size: 22px;
+  font-weight: bold;
   margin: 15px;
-  color: #333;
-   font-family: 'Playfair Display', 'Poppins', sans-serif;
+  color: #0B3C47;
+ font-family: 'IvyMode', 'Times New Roman', serif;
 }
 
 .recommendation-card p {
   font-size: 0.95rem;
   padding: 0 15px 20px;
   color: #555;
-}
-
-/* =========================
-   Why Choose Us Section
-========================= */
-.why-choose-us {
-  background: linear-gradient(135deg, #EEB8E9, #A9B9EC);
-  padding: 60px 20px;
-  text-align: center;
-}
-
-.why-choose-us h2 {
-  font-size: 2.2rem;
-  margin-bottom: 40px;
-  color: #333;
-   font-family: 'Playfair Display', 'Poppins', sans-serif;
-}
-
-.feature-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 30px;
-}
-
-.feature-card {
-  background: white;
-  width: 260px;
-  padding: 30px 20px;
-  border-radius: 20px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.3s ease;
-}
-
-.feature-card:hover {
-  transform: scale(1.05);
-}
-
-.feature-card img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 15px;
-}
-
-.feature-card h4 {
-  font-size: 1.3rem;
-  margin-bottom: 10px;
-  color: #333;
-   font-family: 'Playfair Display', 'Poppins', sans-serif;
-}
-
-.feature-card p {
-  font-size: 0.95rem;
-  color: #666;
+  font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
 }
 
 /* =========================
    Footer
 ========================= */
 .footer {
-  background: linear-gradient(45deg, #ff4db8, #5f57e3);
-  color: white;
-  text-align: center;
-  padding: 20px;
-  font-size: 0.9rem;
+  background-color: #fff;  /* Dark theme color */
+  color: #333;             /* White text */
+  text-align: center;        /* Center text */
+  padding: 20px 0;           /* Top & bottom spacing */
+  font-size: 14px;           /* Small text */
+    font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  border-top: 1px solid rgba(255, 255, 255, 0.2); /* Subtle line */
 }
+/* =========================
+   CTA Section (Dark Theme)
+========================= */
+.cta-section {
+  background: #0B3C47;               /* same as hero */
+  color: #EBC3A0;                    /* same as hero text */
+  padding: 70px 20px;
+  margin: 60px auto 0;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+
+.cta-section::before,
+.cta-section::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(30px);
+  opacity: 0.18;                      /* subtle light blobs */
+}
+
+.cta-section::before {
+  width: 300px; height: 300px;
+  background: #EBC3A0;
+  top: -80px; left: -80px;
+}
+
+.cta-section::after {
+  width: 240px; height: 240px;
+  background: #CC6F5F;
+  bottom: -60px; right: -60px;
+}
+
+.cta-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 520px) 1fr;
+  align-items: center;
+  gap: 32px;
+  padding: 0 16px;
+}
+
+/* Content */
+.cta-content {
+  text-align: center;
+  padding: 10px 0;
+  animation: fadeInUp 900ms ease both;
+}
+
+.cta-content h2 {
+  font-family: 'IvyMode', 'Times New Roman', serif;
+  font-size: 36px;
+  margin: 0 0 10px;                   /* small gap as you wanted */
+  line-height: 1.2;
+  color: #EBC3A0;
+  text-align: center;
+}
+
+.cta-content p {
+  font-size: 17px;
+  line-height: 1.55;
+  margin: 8px 0;                      /* tight vertical rhythm */
+  color: #f4dfcc;                     /* warm light for readability */
+ font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+}
+
+.cta-highlight {
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(235,195,160,0.35);
+   font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+}
+
+/* Side Images */
+.cta-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: float 3s ease-in-out infinite;
+}
+
+.cta-image img {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.06); /* subtle card behind image */
+  padding: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  border: 1px solid rgba(235,195,160,0.25);
+}
+
+/* Simple animations reused across site feel */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 
 /* =========================
    Responsive
 ========================= */
 @media (max-width: 900px) {
-  .recommendation-cards, .feature-grid {
+  .hero {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  .hero-content {
+    width: 100%;
+  }
+
+  .about-us {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  .about-us-content, 
+  .about-us .image {
+    width: 100%;
+    text-align: center;
+  }
+
+  .recommendation-cards, 
+  .feature-grid {
     flex-direction: column;
     align-items: center;
   }
@@ -255,4 +498,34 @@ body {
   .hero-subtitle {
     font-size: 1rem;
   }
+
+  .why-choose-us {
+    padding: 50px 15px;
+  }
+
+  .why-choose-us h2 {
+    font-size: 1.8rem;
+  }
+
+  .feature-card h4 {
+    font-size: 1.2rem;
+  }
+}
+/* Responsive */
+@media (max-width: 1024px) {
+  .cta-container {
+    grid-template-columns: 1fr 1fr;   /* hide one image if needed */
+  }
+  .cta-image.right { display: none; } /* keep left image + content */
+}
+
+@media (max-width: 768px) {
+  .cta-container {
+    grid-template-columns: 1fr;       /* stack vertically */
+    gap: 20px;
+  }
+  .cta-image { order: -1; }           /* image on top */
+  .cta-content h2 { font-size: 28px; }
+  .cta-content p { font-size: 16px; }
+  .cta-image img { max-width: 260px; }
 }
