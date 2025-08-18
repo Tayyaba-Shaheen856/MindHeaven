@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style/GoalsTasksPage.css';
 import Confetti from 'react-confetti';
 
@@ -10,11 +10,46 @@ const GoalsTasksPage = () => {
   const [goalTasksInput, setGoalTasksInput] = useState('');
   const [confetti, setConfetti] = useState(false);
 
+  // Load saved tasks/goals on mount
+  useEffect(() => {
+    const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const savedGoals = JSON.parse(localStorage.getItem('goals')) || [];
+    setTasks(savedTasks);
+    setGoals(savedGoals);
+  }, []);
+
+  // Save tasks immediately whenever they change
+  const updateTasks = (newTasks) => {
+    setTasks(newTasks);
+    localStorage.setItem('tasks', JSON.stringify(newTasks));
+  };
+
+  // Save goals immediately whenever they change
+  const updateGoals = (newGoals) => {
+    setGoals(newGoals);
+    localStorage.setItem('goals', JSON.stringify(newGoals));
+  };
+
   // Add single task
   const addTask = () => {
     if (!taskInput.trim()) return;
-    setTasks([...tasks, { text: taskInput, completed: false }]);
+    const newTasks = [...tasks, { text: taskInput, completed: false }];
+    updateTasks(newTasks);
     setTaskInput('');
+  };
+
+  // Delete single task
+  const deleteTask = (index) => {
+    const newTasks = tasks.filter((_, i) => i !== index);
+    updateTasks(newTasks);
+  };
+
+  // Toggle task completion
+  const toggleTask = (index) => {
+    const newTasks = tasks.map((task, i) =>
+      i === index ? { ...task, completed: !task.completed } : task
+    );
+    updateTasks(newTasks);
   };
 
   // Add goal with tasks
@@ -25,27 +60,32 @@ const GoalsTasksPage = () => {
       .map(t => t.trim())
       .filter(Boolean)
       .map(t => ({ text: t, completed: false }));
-    setGoals([...goals, { title: goalInput, tasks: tasksArray }]);
+    const newGoals = [...goals, { title: goalInput, tasks: tasksArray }];
+    updateGoals(newGoals);
     setGoalInput('');
     setGoalTasksInput('');
   };
 
-  // Toggle task completion
-  const toggleTask = (index) => {
-    const newTasks = [...tasks];
-    newTasks[index].completed = !newTasks[index].completed;
-    setTasks(newTasks);
+  // Delete goal
+  const deleteGoal = (goalIndex) => {
+    const newGoals = goals.filter((_, i) => i !== goalIndex);
+    updateGoals(newGoals);
   };
 
   // Toggle goal task completion
   const toggleGoalTask = (goalIndex, taskIndex) => {
-    const newGoals = [...goals];
-    const task = newGoals[goalIndex].tasks[taskIndex];
-    task.completed = !task.completed;
-    setGoals(newGoals);
+    const newGoals = goals.map((goal, gIdx) => {
+      if (gIdx !== goalIndex) return goal;
+      const updatedTasks = goal.tasks.map((task, tIdx) =>
+        tIdx === taskIndex ? { ...task, completed: !task.completed } : task
+      );
+      return { ...goal, tasks: updatedTasks };
+    });
+    updateGoals(newGoals);
 
-    // Check if all tasks in goal are completed
-    if (newGoals[goalIndex].tasks.every(t => t.completed)) {
+    // Confetti if all tasks in goal completed
+    const allDone = newGoals[goalIndex].tasks.every(t => t.completed);
+    if (allDone) {
       setConfetti(true);
       setTimeout(() => setConfetti(false), 5000);
       alert(`🎉 Congrats! You completed the goal: "${newGoals[goalIndex].title}"`);
@@ -62,9 +102,9 @@ const GoalsTasksPage = () => {
         <h2>Tasks</h2>
         <input
           type="text"
-          placeholder="Enter a task"
+          placeholder="New task"
           value={taskInput}
-          onChange={(e) => setTaskInput(e.target.value)}
+          onChange={e => setTaskInput(e.target.value)}
         />
         <button onClick={addTask}>Add Task</button>
 
@@ -76,7 +116,8 @@ const GoalsTasksPage = () => {
                 checked={task.completed}
                 onChange={() => toggleTask(idx)}
               />
-              {task.text}
+              <span>{task.text}</span>
+              <button onClick={() => deleteTask(idx)}>Delete</button>
             </li>
           ))}
         </ul>
@@ -89,13 +130,13 @@ const GoalsTasksPage = () => {
           type="text"
           placeholder="Goal title"
           value={goalInput}
-          onChange={(e) => setGoalInput(e.target.value)}
+          onChange={e => setGoalInput(e.target.value)}
         />
         <input
           type="text"
           placeholder="Tasks (comma separated)"
           value={goalTasksInput}
-          onChange={(e) => setGoalTasksInput(e.target.value)}
+          onChange={e => setGoalTasksInput(e.target.value)}
         />
         <button onClick={addGoal}>Add Goal</button>
 
@@ -112,19 +153,17 @@ const GoalsTasksPage = () => {
               </div>
               <ul>
                 {goal.tasks.map((task, tIdx) => (
-                  <li
-                    key={tIdx}
-                    className={task.completed ? 'completed' : ''}
-                  >
+                  <li key={tIdx} className={task.completed ? 'completed' : ''}>
                     <input
                       type="checkbox"
                       checked={task.completed}
                       onChange={() => toggleGoalTask(gIdx, tIdx)}
                     />
-                    {task.text}
+                    <span>{task.text}</span>
                   </li>
                 ))}
               </ul>
+              <button onClick={() => deleteGoal(gIdx)}>Delete Goal</button>
             </div>
           );
         })}

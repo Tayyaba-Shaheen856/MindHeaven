@@ -31,7 +31,7 @@ const RecommendationsPage = () => {
         const data = await res.json();
 
         setBooks(data.books || []);
-        setMusic(data.music || []);
+        setMusic(data.songs || []); 
         setMovies(data.movies || []);
       } catch (err) {
         console.error(err);

@@ -5,9 +5,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authenticateToken = require('./middleware/authenticateToken');
-const axios = require('axios');
 const crypto = require('crypto');
-
+const axios = require('axios')
 const app = express();
 const PORT = process.env.PORT || 5000;
 const FRONTEND_URL = process.env.FRONTEND_LOCAL || "http://localhost:3000";
@@ -33,6 +32,8 @@ mongoose.connect(MONGODB_URI)
   });
 
 // ===== Models =====
+
+// --- User Model ---
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password: { type: String, required: true, minlength: 6 },
@@ -58,6 +59,7 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
 
 const User = mongoose.model('User', userSchema);
 
+// --- Favorite Model ---
 const favoriteSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   title: { type: String, required: true },
@@ -67,7 +69,7 @@ const favoriteSchema = new mongoose.Schema({
 
 const Favorite = mongoose.model('Favorite', favoriteSchema);
 
-// ===== Mood Schema =====
+// --- Mood Model ---
 const moodSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   emoji: { type: String, required: true },
@@ -77,12 +79,39 @@ const moodSchema = new mongoose.Schema({
 
 const Mood = mongoose.model('Mood', moodSchema);
 
+// --- Task Model ---
+const taskSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  title: { type: String, required: true },
+  completed: { type: Boolean, default: false }
+}, { timestamps: true });
+
+const Task = mongoose.model('Task', taskSchema);
+
+// --- Goal Model ---
+const goalSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  title: { type: String, required: true },
+  tasks: [
+    {
+      text: { type: String, required: true },
+      completed: { type: Boolean, default: false }
+    }
+  ]
+}, { timestamps: true });
+
+const Goal = mongoose.model('Goal', goalSchema);
+
 // ===== Routes =====
+
+// --- Root ---
 app.get('/', (req, res) => {
   res.send('<h1>Backend Running</h1><p>Use /api/auth endpoints.</p>');
 });
 
-// ===== Register =====
+// ===== Auth Routes =====
+
+// --- Register ---
 app.post('/api/auth/register', async (req, res) => {
   try {
     const { name, email, password, dob, gender, personality } = req.body;
@@ -112,7 +141,7 @@ app.post('/api/auth/register', async (req, res) => {
   }
 });
 
-// ===== Login =====
+// --- Login ---
 app.post('/api/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -138,7 +167,7 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
-// ===== Forgot Password =====
+// --- Forgot Password ---
 app.post('/api/auth/forgot', async (req, res) => {
   try {
     const { email } = req.body;
@@ -158,7 +187,7 @@ app.post('/api/auth/forgot', async (req, res) => {
   }
 });
 
-// ===== Reset Password =====
+// --- Reset Password ---
 app.post('/api/auth/reset-password/:token', async (req, res) => {
   try {
     const { token } = req.params;
@@ -182,7 +211,7 @@ app.post('/api/auth/reset-password/:token', async (req, res) => {
   }
 });
 
-// ===== Change Password =====
+// --- Change Password ---
 app.post('/api/auth/change-password', authenticateToken, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
@@ -203,7 +232,7 @@ app.post('/api/auth/change-password', authenticateToken, async (req, res) => {
   }
 });
 
-// ===== Get Profile =====
+// --- Get Profile ---
 app.get('/api/auth/profile', authenticateToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId).select('-password');
@@ -214,7 +243,7 @@ app.get('/api/auth/profile', authenticateToken, async (req, res) => {
   }
 });
 
-// ===== Update Personality Only =====
+// --- Update Personality Only ---
 app.put('/api/auth/personality', authenticateToken, async (req, res) => {
   try {
     const { personality } = req.body;
@@ -234,7 +263,7 @@ app.put('/api/auth/personality', authenticateToken, async (req, res) => {
   }
 });
 
-// ===== Update Profile =====
+// --- Update Profile ---
 app.post('/api/auth/profile', authenticateToken, async (req, res) => {
   try {
     const { name, dob, gender, personality } = req.body;
@@ -259,7 +288,7 @@ app.post('/api/auth/profile', authenticateToken, async (req, res) => {
   }
 });
 
-// ===== Favorites =====
+// ===== Favorites Routes =====
 app.get('/api/auth/favorites', authenticateToken, async (req, res) => {
   try {
     const favorites = await Favorite.find({ userId: req.user.userId });
@@ -317,6 +346,171 @@ app.post('/api/auth/mood', authenticateToken, async (req, res) => {
 
     res.status(201).json(mood);
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+//===== Tasks Routes =====
+app.get('/api/tasks', authenticateToken, async (req, res) => {
+  try {
+    const tasks = await Task.find({ userId: req.user.userId });
+    res.json(tasks);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/tasks', authenticateToken, async (req, res) => {
+  try {
+    const { title } = req.body;
+    if (!title) return res.status(400).json({ error: 'Task title is required' });
+
+    const task = new Task({ userId: req.user.userId, title });
+    await task.save();
+    res.status(201).json(task);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put('/api/tasks/:id', authenticateToken, async (req, res) => {
+  try {
+    const { title, completed } = req.body;
+
+    const task = await Task.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user.userId },
+      { ...(title && { title }), ...(completed !== undefined && { completed }) },
+      { new: true, runValidators: true }
+    );
+
+    if (!task) return res.status(404).json({ error: 'Task not found' });
+    res.json(task);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/tasks/:id', authenticateToken, async (req, res) => {
+  try {
+    const task = await Task.findOneAndDelete({ _id: req.params.id, userId: req.user.userId });
+    if (!task) return res.status(404).json({ error: 'Task not found' });
+    res.json({ message: 'Task deleted' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ===== Goals Routes =====
+app.get('/api/goals', authenticateToken, async (req, res) => {
+  try {
+    const goals = await Goal.find({ userId: req.user.userId });
+    res.json(Array.isArray(goals) ? goals : []);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/goals', authenticateToken, async (req, res) => {
+  try {
+    const { title, tasks } = req.body;
+    if (!title) return res.status(400).json({ error: 'Goal title is required' });
+
+    const goal = new Goal({ userId: req.user.userId, title, tasks });
+    await goal.save();
+    res.status(201).json(goal);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put('/api/goals/:id', authenticateToken, async (req, res) => {
+  try {
+    const { tasks, title } = req.body;
+    const goal = await Goal.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user.userId },
+      { tasks, ...(title && { title }) },
+      { new: true, runValidators: true }
+    );
+    if (!goal) return res.status(404).json({ error: 'Goal not found' });
+    res.json(goal);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/goals/:id', authenticateToken, async (req, res) => {
+  try {
+    const goal = await Goal.findOneAndDelete({ _id: req.params.id, userId: req.user.userId });
+    if (!goal) return res.status(404).json({ error: 'Goal not found' });
+    res.json({ message: 'Goal deleted' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ===== Recommendations =====
+app.get('/api/auth/recommendations', authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select('personality');
+    if (!user?.personality) return res.status(400).json({ error: 'Set personality first' });
+
+    const personalityMap = {
+      Friendly: 'fiction',
+      Adventurous: 'travel',
+      Curious: 'science',
+      Romantic: 'romance',
+      Creative: 'art',
+      Thoughtful: 'philosophy'
+    };
+    const subject = personalityMap[user.personality] || 'general';
+
+    // --- Books from OpenLibrary ---
+    const booksResp = await axios.get(`https://openlibrary.org/search.json?q=subject:${subject}`);
+    const books = booksResp.data.docs.slice(0, 5).map(book => ({
+      title: book.title,
+      author: book.author_name?.join(', ') || 'Unknown',
+      first_publish_year: book.first_publish_year || 'N/A',
+      visit: `https://openlibrary.org/search?q=${encodeURIComponent(book.title)}`
+    }));
+
+    // --- Movies (static search links on Netflix) ---
+    const movieSubjects = {
+      Friendly: 'comedy',
+      Adventurous: 'action',
+      Curious: 'documentary',
+      Romantic: 'romance',
+      Creative: 'animation',
+      Thoughtful: 'drama'
+    };
+    const movieGenre = movieSubjects[user.personality] || 'popular';
+    const movies = Array.from({ length: 5 }, (_, i) => ({
+      title: `${movieGenre} movie ${i + 1}`,
+      visit: `https://www.netflix.com/search?q=${encodeURIComponent(movieGenre)}`
+    }));
+
+    // --- Songs (static search links on Spotify) ---
+    const songSubjects = {
+      Friendly: 'pop',
+      Adventurous: 'rock',
+      Curious: 'indie',
+      Romantic: 'love',
+      Creative: 'instrumental',
+      Thoughtful: 'classical'
+    };
+    const songGenre = songSubjects[user.personality] || 'top hits';
+    const songs = Array.from({ length: 5 }, (_, i) => ({
+      title: `${songGenre} song ${i + 1}`,
+      visit: `https://open.spotify.com/search/${encodeURIComponent(songGenre)}`
+    }));
+
+    res.json({
+      personality: user.personality,
+      books,
+      movies,
+      songs
+    });
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.message });
   }
 });
