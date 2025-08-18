@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style/LandingPage.css';
 import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const [showInstructions, setShowInstructions] = useState(false);
 
   return (
     <div className="landing-page gradient-background">
