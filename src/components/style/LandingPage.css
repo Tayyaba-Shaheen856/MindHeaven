@@ -1,19 +1,12 @@
-<<<<<<< Updated upstream
+/* =========================
+   Global
+========================= */
 body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
   font-family: 'IvyMode', 'Times New Roman', serif;
   overflow-x: hidden;
-=======
-/* General Styles */
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-  background: #f8f9fa;
-  color: #333;
->>>>>>> Stashed changes
 }
 
 /* Gradient Background */
@@ -24,9 +17,10 @@ body, html {
   flex-direction: column;
 }
 
-/* Header */
+/* =========================
+   Header
+========================= */
 .header {
-<<<<<<< Updated upstream
   top: 0;
   left: 0;
   height: 70px;
@@ -36,17 +30,6 @@ body, html {
   justify-content: space-between;
   padding: 0 40px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-=======
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 40px;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  position: sticky;
-  top: 0;
->>>>>>> Stashed changes
   z-index: 1000;
 }
 
@@ -65,28 +48,16 @@ body, html {
   border-radius: 20px;
   border: none;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: bold;
+  font-family: 'IvyMode', 'Times New Roman', serif;
+  font-size: 20px;
   transition: all 0.3s ease;
-}
-
-.login-btn {
-  background: linear-gradient(45deg, #7873f5, #ff6ec4);
-  color: white;
-}
-
-.login-btn:hover {
-  transform: scale(1.05);
-}
-
-<<<<<<< Updated upstream
-.login-btn,
-.register-btn,
-.logout-btn {
   background: linear-gradient(180deg, #CC6F5F, #F3C3A2);
   color: #0B3C47;
-  font-family: 'IvyMode', 'Times New Roman', serif;
-  font-weight: bold;
-  font-size: 20px;
+}
+
+.auth-btn:hover {
+  transform: scale(1.05);
 }
 
 /* =========================
@@ -117,7 +88,6 @@ body, html {
   font-size: 45px;
   font-weight: bold;
   margin-bottom: 15px;
-  font-family: 'IvyMode', 'Times New Roman', serif;
   line-height: 1.2;
 }
 
@@ -130,11 +100,64 @@ body, html {
   font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
 }
 
-/* Hero Badge */
 .hero-badge img {
   margin-top: 30px;
   width: 100%;
   height: 450px;
+}
+
+/* =========================
+   Instructions Modal
+========================= */
+.instructions-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(11,60,71,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.instructions-modal {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 20px;
+  max-width: 500px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.instructions-modal h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #0B3C47;
+}
+
+.instructions-modal p {
+  font-size: 16px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.instructions-modal .auth-btn {
+  width: 50%;
+  margin-bottom: 15px;
+}
+
+.instructions-modal .close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  font-size: 22px;
+  color: #0B3C47;
+  border: none;
+  cursor: pointer;
 }
 
 /* =========================
@@ -147,33 +170,26 @@ body, html {
   justify-content: center;
   align-items: center;
   gap: 40px;
-  text-align: center;
-  position: relative;
 }
 
 .heading {
   font-size: 22px;
   font-weight: bold;
-  font-family: 'IvyMode', 'Times New Roman', serif;
-color:#CC6F5F;
-  margin: 0; /* no extra gap */
+  color:#CC6F5F;
+  margin: 0;
 }
 
 .about-us-content {
   width: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: start;
   gap: 12px;
 }
 
 .about-us-title {
   font-size: 38px;
   font-weight: bold;
-  margin: 5px 0 10px; /* reduce gap */
-  font-family: 'IvyMode', 'Times New Roman', serif;
-  line-height: 1.2;
+  margin: 5px 0 10px;
   color: #0B3C47;
 }
 
@@ -181,13 +197,12 @@ color:#CC6F5F;
   font-size: 17px;
   font-weight: 400;
   line-height: 1.5;
-  margin-bottom: 15px; /* less bottom gap */
+  margin-bottom: 15px;
   color: #333;
   font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
   text-align: left;
 }
 
-/* About Us Bullet Points */
 .about-us-list {
   list-style: none;
   padding: 0;
@@ -198,19 +213,16 @@ color:#CC6F5F;
   font-size: 20px;
   color: #333;
   margin-bottom: 8px;
-  font-weight: 500;
   display: flex;
   align-items: center;
   gap: 10px;
   font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
 }
 
-/* About Us Image */
 .about-us .image {
   width: 50%;
 }
 .about-us .image img {
-  margin-top: 20px;
   width: 100%;
   height: 420px;
   object-fit: contain;
@@ -220,13 +232,12 @@ color:#CC6F5F;
    Why Choose Us Section
 ========================= */
 .why-choose-us {
-  background: #0B3C47; /* same as hero */
+  background: #0B3C47;
   padding: 80px 20px;
   text-align: center;
   color: #EBC3A0;
   display:flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
@@ -234,13 +245,10 @@ color:#CC6F5F;
   font-size: 2.5rem;
   margin-bottom: 50px;
   color: #EBC3A0;
-  font-family: 'IvyMode', 'Times New Roman', serif;
 }
 .why-choose-us p{
-font-size:16px;
+  font-size:16px;
   padding: 0 15px 20px;
-   color: #EBC3A0;
-  font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
   line-height: 1.4em;
 }
 .feature-grid {
@@ -255,7 +263,7 @@ font-size:16px;
   width: 260px;
   padding: 30px 20px;
   border-radius: 20px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2); /* softer */
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
   text-align: center;
   transition: transform 0.3s ease;
   border:1px solid #EBC3A0;
@@ -278,261 +286,119 @@ font-size:16px;
   font-size: 1.4rem;
   margin-bottom: 10px;
   color: #EBC3A0;
-  font-family: 'IvyMode', 'Times New Roman', serif;
 }
 
 .feature-card p {
   font-size: 1rem;
   color: #f1e3d3;
   line-height: 1.4;
-=======
-/* Hero Section */
-.hero {
-  text-align: center;
-  padding: 80px 20px;
-  color: #fff;
 }
 
-.hero-title {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 15px;
-}
-
-.hero-subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 25px;
->>>>>>> Stashed changes
-}
-
-/* Take Test Button */
-.take-test-btn {
-  margin-top: 20px;
-  padding: 14px 32px;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 30px;
-  background: linear-gradient(45deg, #ff6ec4, #7873f5);
-  color: white;
-  cursor: pointer;
-  font-weight: 600;
-  transition: transform 0.2s ease, background 0.3s ease;
-}
-
-.take-test-btn:hover {
-  transform: scale(1.07);
-}
-
-/* Recommendations Section */
+/* =========================
+   Recommendations Section
+========================= */
 .recommendations {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   padding: 60px 20px;
-  text-align: center;
   background: #fff;
 }
 
 .recommendations h2 {
   font-size: 2rem;
   margin-bottom: 40px;
-<<<<<<< Updated upstream
   color: #0B3C47;
-font-family: 'IvyMode', 'Times New Roman', serif;
 }
 .recommendations p{
-font-size:16px;
+  font-size:16px;
   padding: 0 15px 20px;
-   color: #333;
-  font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
   line-height: 1.4em;
-=======
->>>>>>> Stashed changes
 }
 .recommendation-cards {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   gap: 25px;
+  justify-content: center;
 }
 
 .recommendation-card {
-<<<<<<< Updated upstream
   background: #EBC3A0;
   width: 280px;
-=======
-  background: #f9f9f9;
->>>>>>> Stashed changes
-  border-radius: 15px;
+  border-radius: 12px;
   padding: 20px;
-  width: 280px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   transition: transform 0.3s ease;
+  text-align: center;
+}
+
+.recommendation-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 15px;
 }
 
 .recommendation-card:hover {
   transform: translateY(-8px);
 }
 
-.recommendation-card img {
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 15px;
-}
-
 .recommendation-card h3 {
-<<<<<<< Updated upstream
   font-size: 22px;
   font-weight: bold;
-  margin: 15px;
+  margin: 15px 0 10px 0;
   color: #0B3C47;
- font-family: 'IvyMode', 'Times New Roman', serif;
 }
 
 .recommendation-card p {
   font-size: 0.95rem;
   padding: 0 15px 20px;
   color: #555;
-  font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
 }
 
 /* =========================
-   Footer
-========================= */
-.footer {
-  background-color: #fff;  /* Dark theme color */
-  color: #333;             /* White text */
-  text-align: center;        /* Center text */
-  padding: 20px 0;           /* Top & bottom spacing */
-  font-size: 14px;           /* Small text */
-    font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
-  border-top: 1px solid rgba(255, 255, 255, 0.2); /* Subtle line */
-=======
-  margin-bottom: 10px;
-}
-
-/* Why Choose Us */
-.why-choose-us {
-  padding: 60px 20px;
-  background: #f1f3f6;
-  text-align: center;
-}
-
-.why-choose-us h2 {
-  font-size: 2rem;
-  margin-bottom: 40px;
-}
-
-.feature-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 25px;
-}
-
-.feature-card {
-  background: #fff;
-  border-radius: 15px;
-  padding: 20px;
-  width: 280px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
-}
-
-.feature-card:hover {
-  transform: translateY(-8px);
-}
-
-.feature-card img {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 15px;
-}
-
-/* Footer */
-.footer {
-  padding: 20px;
-  text-align: center;
-  background: #333;
-  color: #fff;
-  margin-top: auto;
->>>>>>> Stashed changes
-}
-/* =========================
-   CTA Section (Dark Theme)
+   CTA Section (Fixed Scaling)
 ========================= */
 .cta-section {
-  background: #0B3C47;               /* same as hero */
-  color: #EBC3A0;                    /* same as hero text */
-  padding: 70px 20px;
-  margin: 60px auto 0;
+  background: #0B3C47;
+  color: #EBC3A0;
+  padding: 50px 20px;
   border-radius: 20px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-}
-
-.cta-section::before,
-.cta-section::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(30px);
-  opacity: 0.18;                      /* subtle light blobs */
-}
-
-.cta-section::before {
-  width: 300px; height: 300px;
-  background: #EBC3A0;
-  top: -80px; left: -80px;
-}
-
-.cta-section::after {
-  width: 240px; height: 240px;
-  background: #CC6F5F;
-  bottom: -60px; right: -60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  margin: 60px auto;
 }
 
 .cta-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr minmax(280px, 520px) 1fr;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 32px;
-  padding: 0 16px;
-}
-
-/* Content */
-.cta-content {
+  gap: 30px;
+  width: 100%;
   text-align: center;
-  padding: 10px 0;
-  animation: fadeInUp 900ms ease both;
 }
 
 .cta-content h2 {
-  font-family: 'IvyMode', 'Times New Roman', serif;
-  font-size: 36px;
-  margin: 0 0 10px;                   /* small gap as you wanted */
-  line-height: 1.2;
-  color: #EBC3A0;
-  text-align: center;
+  font-size: 32px;
+  margin-bottom: 15px;
 }
 
 .cta-content p {
-  font-size: 17px;
-  line-height: 1.55;
-  margin: 8px 0;                      /* tight vertical rhythm */
-  color: #f4dfcc;                     /* warm light for readability */
- font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 8px 0;
 }
 
 .cta-highlight {
   font-weight: 600;
   color: #ffffff;
   text-shadow: 0 0 10px rgba(235,195,160,0.35);
-   font-family: 'Alternate Gothic No3 D', 'Trebuchet MS', Arial, Helvetica, sans-serif;
 }
 
 /* Side Images */
@@ -540,22 +406,22 @@ font-size:16px;
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: float 3s ease-in-out infinite;
+  width: 100%;
 }
 
 .cta-image img {
+  max-width: 300px;
   width: 100%;
-  max-width: 320px;
   height: auto;
   object-fit: contain;
   border-radius: 18px;
-  background: rgba(255,255,255,0.06); /* subtle card behind image */
+  background: rgba(255,255,255,0.06);
   padding: 12px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.25);
   border: 1px solid rgba(235,195,160,0.25);
+  animation: float 3s ease-in-out infinite;
 }
 
-/* Simple animations reused across site feel */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -565,8 +431,18 @@ font-size:16px;
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* =========================
+   Footer
+========================= */
+.footer {
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
 
-<<<<<<< Updated upstream
 /* =========================
    Responsive
 ========================= */
@@ -575,174 +451,29 @@ font-size:16px;
     flex-direction: column;
     padding: 40px 20px;
   }
-
   .hero-content {
     width: 100%;
   }
-
   .about-us {
     flex-direction: column;
     padding: 40px 20px;
   }
-
   .about-us-content, 
   .about-us .image {
     width: 100%;
     text-align: center;
   }
-
   .recommendation-cards, 
   .feature-grid {
     flex-direction: column;
     align-items: center;
   }
-
-  .hero-title {
-    font-size: 2.5rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.1rem;
-  }
-}
-
-@media (max-width: 500px) {
-  .header {
-    padding: 0 20px;
-  }
-
-  .auth-btn {
-    padding: 8px 18px;
-    font-size: 0.9rem;
-  }
-
-  .hero-title {
-    font-size: 2rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-
-  .why-choose-us {
-    padding: 50px 15px;
-  }
-
-  .why-choose-us h2 {
-    font-size: 1.8rem;
-  }
-
-  .feature-card h4 {
-    font-size: 1.2rem;
-  }
-=======
-/* Modal Overlay */
-.modal-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: fadeIn 0.3s ease;
-  z-index: 2000;
-}
-
-/* Modal Content */
-.modal-content {
-  background: #fff;
-  padding: 30px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
-  animation: slideUp 0.4s ease;
-}
-
-.modal-content h2 {
-  margin-bottom: 15px;
-  font-size: 1.8rem;
-  color: #333;
-}
-
-.modal-content p {
-  margin-bottom: 20px;
-  color: #555;
-}
-
-.modal-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 20px;
-  text-align: left;
-}
-
-.modal-content li {
-  margin: 8px 0;
-  font-size: 1rem;
-  color: #444;
-}
-
-/* Modal Buttons */
-.modal-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-.close-btn, .proceed-btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 25px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.close-btn {
-  background: #ccc;
-  color: #333;
-}
-
-.close-btn:hover {
-  transform: scale(1.05);
-}
-
-.proceed-btn {
-  background: linear-gradient(45deg, #ff6ec4, #7873f5);
-  color: white;
-}
-
-.proceed-btn:hover {
-  transform: scale(1.05);
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { transform: translateY(50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
->>>>>>> Stashed changes
-}
-/* Responsive */
-@media (max-width: 1024px) {
-  .cta-container {
-    grid-template-columns: 1fr 1fr;   /* hide one image if needed */
-  }
-  .cta-image.right { display: none; } /* keep left image + content */
+  .hero-title { font-size: 2.5rem; }
+  .hero-subtitle { font-size: 1.1rem; }
 }
 
 @media (max-width: 768px) {
-  .cta-container {
-    grid-template-columns: 1fr;       /* stack vertically */
-    gap: 20px;
-  }
-  .cta-image { order: -1; }           /* image on top */
+  .cta-container { flex-direction: column; gap: 20px; }
   .cta-content h2 { font-size: 28px; }
   .cta-content p { font-size: 16px; }
   .cta-image img { max-width: 260px; }

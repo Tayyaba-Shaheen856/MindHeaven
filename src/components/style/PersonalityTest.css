@@ -1,5 +1,8 @@
+/* =========================
+   Personality Test CSS
+========================= */
 .quiz-wrapper {
- background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -10,16 +13,15 @@
 
 .progress-bar {
   width: 100%;
-  
   height: 8px;
-  background: rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 4px;
   margin-bottom: 20px;
 }
 
 .progress-fill {
   height: 8px;
- background: linear-gradient(45deg, #ff4db8, #5f57e3);
+  background: linear-gradient(45deg, #ff4db8, #5f57e3);
   border-radius: 4px;
   transition: width 0.3s ease;
 }
@@ -31,17 +33,18 @@
   width: 100%;
   max-width: 500px;
   text-align: center;
-  box-shadow: 0px 10px 40px rgba(0,0,0,0.15);
+  box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.15);
   animation: fadeIn 0.4s ease;
 }
-.card h3{
-  color:black;
+
+.card h3 {
+  color: black;
 }
 
 .question-text {
   font-size: 1.2rem;
   margin: 20px 0;
-  color:black;
+  color: black;
 }
 
 .options-grid {
@@ -62,18 +65,90 @@
 }
 
 .option-btn:hover {
-     background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
 }
 
 .option-btn.selected {
- background: linear-gradient(45deg, #ff4db8, #5f57e3) !important;
+  background: linear-gradient(45deg, #ff4db8, #5f57e3) !important;
   color: white;
   font-weight: bold;
   transform: scale(1.1);
 }
 
-
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   Results Prompt Modal
+========================= */
+.instructions-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.instructions-modal {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 20px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+.instructions-modal h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.instructions-modal p {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  color: #555;
+}
+
+.auth-btn.take-test-btn {
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.auth-btn.take-test-btn:hover {
+  background: linear-gradient(45deg, #ff4db8, #5f57e3);
+  transform: scale(1.05);
+}
+
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }

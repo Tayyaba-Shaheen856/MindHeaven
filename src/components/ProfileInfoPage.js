@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./style/ProfileInfo.css";
-// const API_URL = process.env.REACT_APP_API_URL;
-// const API_URL = "https://upgraded-space-lamp-x5q9xvxq4p6qhvw55-5000.app.github.dev";
 
 const ProfileInfo = () => {
   const [user, setUser] = useState({
@@ -16,41 +14,42 @@ const ProfileInfo = () => {
 
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const location = useLocation();
 
+  // Fetch profile from backend
+  const fetchProfile = async () => {
+    if (!token) return;
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error("Failed to fetch profile");
+      const data = await res.json();
+
+      setUser({
+        name: data.name || "",
+        email: data.email || "",
+        age: data.age || "",
+        gender: data.gender || "",
+        dob: data.dob ? new Date(data.dob).toLocaleDateString() : "",
+        personality: data.personality || "",
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Fetch profile on mount and whenever location changes (after returning from test)
   useEffect(() => {
-    const fetchProfile = async () => {
-      if (!token) return;
-      try {
-        const res = await fetch("http://localhost:5000/api/auth/profile", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!res.ok) throw new Error("Failed to fetch profile");
-        const data = await res.json();
-
-        setUser({
-          name: data.name || "",
-          email: data.email || "",
-          age: data.age || "",
-          gender: data.gender || "",
-          dob: data.dob ? new Date(data.dob).toLocaleDateString() : "",
-          personality: data.personality || "",
-        });
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
     fetchProfile();
-  }, [token]);
+  }, [token, location]);
 
-  // ===== Button Handlers =====
   const handleRetakePersonality = () => {
     navigate("/personality", { state: { user } });
   };
 
   const handleChangePassword = () => {
-    navigate("/reset-password"); // updated to match App.js route
+    navigate("/reset-password");
   };
 
   return (
@@ -65,7 +64,6 @@ const ProfileInfo = () => {
         <p><strong>Personality:</strong> {user.personality}</p>
       </div>
 
-      {/* ===== Action Buttons ===== */}
       <div className="profile-actions">
         <button className="btn" onClick={handleRetakePersonality}>
           Retake Personality Test
