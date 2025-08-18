@@ -19,13 +19,14 @@ const ProfileInfo = () => {
   // Fetch profile from backend
   const fetchProfile = async () => {
     if (!token) return;
+
     try {
       const res = await fetch("http://localhost:5000/api/auth/profile", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Failed to fetch profile");
-      const data = await res.json();
 
+      const data = await res.json();
       setUser({
         name: data.name || "",
         email: data.email || "",
@@ -35,26 +36,30 @@ const ProfileInfo = () => {
         personality: data.personality || "",
       });
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching profile:", err);
     }
   };
 
-  // Fetch profile on mount and whenever location changes (after returning from test)
+  // Fetch profile on mount and whenever location changes
   useEffect(() => {
     fetchProfile();
   }, [token, location]);
 
+  // Navigate to Personality Test page for retake
   const handleRetakePersonality = () => {
     navigate("/personality", { state: { user } });
   };
 
+  // Navigate to Reset Password page for logged-in user
   const handleChangePassword = () => {
+    // logged-in user flow
     navigate("/reset-password");
   };
 
   return (
     <div className="profile-container">
       <h2>Profile Info</h2>
+
       <div className="profile-details">
         <p><strong>Name:</strong> {user.name}</p>
         <p><strong>Email:</strong> {user.email}</p>
