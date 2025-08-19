@@ -1,43 +1,93 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './style/NotesFavsPage.css';
 
 const NotesFavesPage = () => {
-  const [items, setItems] = useState([]); // { id, title, content, type: 'note' | 'fave', starred }
+  const [items, setItems] = useState([]); // { _id, title, content, type: 'note' | 'fave', starred }
   const [newNoteTitle, setNewNoteTitle] = useState('');
   const [newNoteContent, setNewNoteContent] = useState('');
   const [filter, setFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Load items from localStorage (optional)
-  useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('notesFaves')) || [];
-    setItems(saved);
-  }, []);
+  const token = localStorage.getItem('token');
 
-  // Save items to localStorage whenever they change
+  // Fetch all notes & favorites from backend
   useEffect(() => {
-    localStorage.setItem('notesFaves', JSON.stringify(items));
-  }, [items]);
+    if (!token) return;
 
-  const addNote = () => {
-    if (!newNoteTitle.trim()) return;
-    const newItem = {
-      id: Date.now(),
-      title: newNoteTitle,
-      content: newNoteContent,
-      type: 'note',
-      starred: false
+    const fetchItems = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/auth/favorites', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        const fetchedItems = res.data.map(item => ({
+          _id: item._id,
+          title: item.title,
+          content: item.content,
+          type: item.type, // 'note' or 'fave'
+          starred: item.type === 'fave'
+        }));
+
+        setItems(fetchedItems);
+      } catch (err) {
+        console.error('Failed to fetch notes/favorites:', err);
+        setItems([]);
+      }
     };
-    setItems([newItem, ...items]);
-    setNewNoteTitle('');
-    setNewNoteContent('');
+
+    fetchItems();
+  }, [token]);
+
+  // Add a new note (POST to backend)
+  const addNote = async () => {
+    if (!newNoteTitle.trim()) return;
+
+    try {
+      const res = await axios.post(
+        'http://localhost:5000/api/auth/favorites',
+        { title: newNoteTitle, content: newNoteContent, type: 'note' },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const newItem = {
+        _id: res.data.favorite._id,
+        title: res.data.favorite.title,
+        content: res.data.favorite.content,
+        type: 'note',
+        starred: false
+      };
+
+      setItems([newItem, ...items]);
+      setNewNoteTitle('');
+      setNewNoteContent('');
+    } catch (err) {
+      console.error('Failed to add note:', err);
+    }
   };
 
-  const toggleStar = (id) => {
-    const updated = items.map(item =>
-      item.id === id ? { ...item, starred: !item.starred, type: item.starred ? 'note' : 'fave' } : item
-    );
-    setItems(updated);
+  // Toggle star (note ↔ fave) by updating type on backend
+  const toggleStar = async (id) => {
+    const item = items.find(i => i._id === id);
+    if (!item || !token) return;
+
+    const newType = item.starred ? 'note' : 'fave';
+
+    try {
+      await axios.put(
+        `http://localhost:5000/api/auth/favorites/${id}`,
+        { type: newType },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setItems(prev =>
+        prev.map(i =>
+          i._id === id ? { ...i, starred: !i.starred, type: newType } : i
+        )
+      );
+    } catch (err) {
+      console.error('Failed to toggle star:', err);
+    }
   };
 
   const filteredItems = items.filter(item => {
@@ -86,12 +136,12 @@ const NotesFavesPage = () => {
       {/* Items List */}
       <div className="items-grid">
         {filteredItems.map(item => (
-          <div key={item.id} className="item-card">
+          <div key={item._id} className="item-card">
             <h3>{item.title}</h3>
             <p>{item.content}</p>
             <button
               className={`star-btn ${item.starred ? 'starred' : ''}`}
-              onClick={() => toggleStar(item.id)}
+              onClick={() => toggleStar(item._id)}
             >
               ⭐
             </button>
