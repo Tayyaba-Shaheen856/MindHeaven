@@ -29,7 +29,7 @@
 
 body{
 	font-family: var(--default-font);
-	font-size: 16px;
+	font-size: 18px;
 	font-weight: 400;
 	line-height: 1.6em;
 	background-color: var(--background-color);
@@ -234,7 +234,7 @@ body{
 .help-block.with-errors ul li{
 	color: var(--error-color);
 	font-weight: 500;
-	font-size: 14px;
+	font-size: 16px;
 }
 
 /************************************/

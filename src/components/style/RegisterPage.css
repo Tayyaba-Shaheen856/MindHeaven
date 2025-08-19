@@ -1,3 +1,16 @@
+:root{
+	--background-color      : #F4EAE1;
+  --primary-color :#0c2f37;
+	--secondary-color		: #F9F9F9;
+	--text-color			: #838383;
+	--accent-color			: #456445;
+	--white-color			: #FFFFFF;
+	--divider-color			: #EEEDED;
+	--dark-divider-color	: #FFFFFF1A;
+	--default-font			: "Sora", sans-serif;
+	--accent-font			: "Marcellus", serif;
+}
+
 .register-page {
   min-height: 100vh;
   display: flex;

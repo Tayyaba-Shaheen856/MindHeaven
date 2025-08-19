@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style/LandingPage.css";
 import 'animate.css';
-
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -20,7 +19,7 @@ const LandingPage = () => {
   </Link>
 
   <div className="ms-auto">
-    <Link to="/PersonalityTest" className="btn btn-success">
+    <Link to="/login" className="btn btn-success">
       Login
     </Link>
   </div>
@@ -66,7 +65,7 @@ const LandingPage = () => {
               <div className="hero-content-body">
                 {/* Hero Button Start */}
                 <div className="hero-btn wow fadeInUp" data-wow-delay="0.4s">
-                  <Link to="/PersonalityTest" className="btn-default">
+                  <Link to="/personality" className="btn-default">
                     Take A Test
                   </Link>
                 </div>
@@ -120,7 +119,7 @@ const LandingPage = () => {
             </p>
             <button
               className="auth-btn take-test-btn pulse"
-              onClick={() => navigate("/PersonalityTest")}
+              onClick={() => navigate("/personality")}
             >
               I'm Ready!
             </button>
@@ -227,8 +226,8 @@ const LandingPage = () => {
               className="section-btn wow fadeInUp"
               data-wow-delay="0.2s"
             >
-              <Link to="/services" className="btn-default">
-                view all services
+              <Link to="/personality" className="btn-default">
+                view all Recommendations
               </Link>
             </div>
           </div>
@@ -535,3 +534,13 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+
+
+
+
+
+
+
+
+
+

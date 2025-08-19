@@ -110,12 +110,20 @@ const PersonalityTest = () => {
 
   return (
     <div className="quiz-wrapper">
-      {/* Progress bar */}
-      <div className="progress-bar">
+      
+      {/* <div className="progress-bar">
         <div className="progress-fill" style={{ width: `${progress}%` }} />
-      </div>
+      </div> */}
+      
+  {/* Progress bar */}
+  <div className="progress">
+    <div
+      className="progress-bar"
+      style={{ width: `${progress}%` }}
+    />
+  </div>
 
-      {/* Question card */}
+
       {!finished && (
         <div className="card">
           <h3>
