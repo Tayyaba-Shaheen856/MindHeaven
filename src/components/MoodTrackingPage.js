@@ -18,10 +18,11 @@ const MoodTrackingPage = () => {
   const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem('token');
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
+  // Fetch previous moods and journal entries
   useEffect(() => {
-    const fetchMoods = async () => {
+    const fetchEntries = async () => {
       try {
         const res = await fetch(`${API_URL}/api/auth/mood`, {
           headers: { Authorization: `Bearer ${token}` }
@@ -31,19 +32,20 @@ const MoodTrackingPage = () => {
           setEntries(data);
         }
       } catch (err) {
-        console.error(err);
+        console.error('Error fetching entries:', err);
       }
     };
-    fetchMoods();
+    fetchEntries();
   }, [API_URL, token]);
 
+  // Submit mood entry
   const submitMood = async () => {
-    const moodToSubmit = customMood || mood;
+    const moodToSubmit = customMood.trim() || mood;
     if (!moodToSubmit) return alert('Please select or enter a mood');
 
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/api/mood`, {
+      const res = await fetch(`${API_URL}/api/auth/mood`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,26 +56,47 @@ const MoodTrackingPage = () => {
 
       if (res.ok) {
         const newEntry = await res.json();
-        setEntries(prev => [newEntry.mood, ...prev]);
+        setEntries(prev => [newEntry, ...prev]); // use the full entry object
         setMood('');
         setCustomMood('');
+      } else {
+        const errData = await res.json();
+        alert(errData.error || 'Error saving mood');
       }
     } catch (err) {
-      console.error(err);
+      console.error('Error saving mood:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  const submitJournal = () => {
+  // Submit journal entry
+  const submitJournal = async () => {
     if (!journal.trim()) return alert('Write something first!');
-    const newEntry = {
-      emoji: `📝 Journal Entry`,
-      note: journal,
-      timestamp: new Date()
-    };
-    setEntries(prev => [newEntry, ...prev]);
-    setJournal('');
+    try {
+      setLoading(true);
+      const res = await fetch(`${API_URL}/api/auth/mood`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ emoji: '📝 Journal Entry', note: journal })
+      });
+
+      if (res.ok) {
+        const newEntry = await res.json();
+        setEntries(prev => [newEntry, ...prev]); // use the full entry object
+        setJournal('');
+      } else {
+        const errData = await res.json();
+        alert(errData.error || 'Error saving journal');
+      }
+    } catch (err) {
+      console.error('Error saving journal:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const bgColor = moodColors[customMood || mood] || moodColors.Default;
@@ -107,7 +130,7 @@ const MoodTrackingPage = () => {
           placeholder="Write your thoughts (max 5000 chars)"
           maxLength={5000}
         />
-        <button onClick={submitJournal}>Save Journal</button>
+        <button onClick={submitJournal} disabled={loading}>Save Journal</button>
       </div>
 
       <div className="entries-section">

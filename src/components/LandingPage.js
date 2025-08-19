@@ -1,163 +1,536 @@
-import React from 'react';
-import './style/LandingPage.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom"; 
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style/LandingPage.css";
+import 'animate.css';
+
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const [showInstructions, setShowInstructions] = useState(false);
 
   return (
-    <div className="landing-page gradient-background">
-      {/* Header */}
-      <header className="header">
-        <div className="logo" onClick={() => navigate('/')}>
-          <img src="/images/logo.png" alt="Logo" />
-        </div>
-        <div className="header-buttons">
-          <button className="auth-btn register-btn" onClick={() => navigate('/register')}>
-            Register
-          </button>
-          <button className="auth-btn login-btn" onClick={() => navigate('/login')}>
-            Login
-          </button>
-        </div>
-      </header>
+    <>
+  <header className="main-header">
+      <div className="header-sticky">
+        <nav className="navbar navbar-expand-lg">
+          <div className="container">
+  <Link className="navbar-brand" to="/">
+    <img src="images/logo2.png" alt="Logo" style={{ height: "40px" }} />
+  </Link>
 
-      {/* Hero Section */}
-      <section>
-        <div className="hero">
-          <div className="hero-content">
-            <h1 className="hero-title">Discover Your Personality</h1>
-            <p className="hero-subtitle">
-              Take our personality test and unlock personalized recommendations 
-              for music, books, and movies—crafted to match who you truly are.
+  <div className="ms-auto">
+    <Link to="/PersonalityTest" className="btn btn-success">
+      Login
+    </Link>
+  </div>
+</div>
+        </nav>
+        <div className="responsive-menu"></div>
+      </div>
+    </header>
+      {/* ================= Hero Section ================= */}
+      
+        
+
+        <div className="hero parallaxie">
+      <div className="container">
+        <div className="hero-dots">
+          <span className="dot dot1"></span>
+          <span className="dot dot2"></span>
+          <span className="dot dot3"></span>
+          <span className="dot dot4"></span>
+          <span className="dot dot5"></span>
+          <span className="dot dot6"></span>
+          <span className="dot dot7"></span>
+          <span className="dot dot8"></span>
+        </div>
+        <div className="row align-items-center">
+          {/* Left Content Column */}
+          <div className="col-lg-6">
+            {/* Hero Content Start */}
+            <div className="hero-content">
+              {/* Section Title Start */}
+              <div className="section-title">
+                <h3 className="wow fadeInUp">welcome to MindHeaven</h3>
+                <h1 className="text-anime-style-2" data-cursor="-opaque">
+                  Discover Your Personality with Us
+                </h1>
+                <p className="wow fadeInUp" data-wow-delay="0.2s">
+                  Are you curious about exploring your personality and finding what truly inspires you? Our platform is designed to guide you on a journey of self-understanding and growth. With personalized recommendations, mood tracking, journals, and daily tasks, we help you stay balanced, creative, and motivated every day.
+                </p>
+              </div>
+              {/* Section Title End */}
+
+              {/* Hero Content Body Start */}
+              <div className="hero-content-body">
+                {/* Hero Button Start */}
+                <div className="hero-btn wow fadeInUp" data-wow-delay="0.4s">
+                  <Link to="/PersonalityTest" className="btn-default">
+                    Take A Test
+                  </Link>
+                </div>
+                {/* Hero Button End */}
+              </div>
+              {/* Hero Content Body End */}
+            </div>
+            {/* Hero Content End */}
+          </div>
+          {/* Left Content Column End */}
+
+          {/* Right Image Column (optional, uncomment if needed) */}
+          
+          <div className="col-lg-6">
+            <div className="hero-image wow fadeInRight" data-wow-delay="0.3s">
+              <img
+                src="/images/hero.webp"
+                alt="Hero"
+                className="img-fluid"
+              />
+            </div>
+          </div> 
+          
+          {/* Right Image Column End */}
+        </div>
+
+        {/* Hero List Start */}
+        <div className="hero-list wow fadeInUp" data-wow-delay="0.6s">
+          <ul>
+            <li>Personality Discovery</li>
+            <li>Personalized Recommendations</li>
+            <li>Mood Tracking</li>
+            <li>Journals & Reflections</li>
+             <li>Daily Tasks</li>
+          </ul>
+        </div>
+        {/* Hero List End */}
+      </div>
+    </div>
+
+
+    {/*nstruction model */}
+      {showInstructions && (
+        <div className="instructions-overlay">
+          <div className="instructions-modal">
+            <h2>How to Take the Test</h2>
+            <p>
+              This test takes approximately 5-10 minutes.
+              <br />
+              Answer honestly and enjoy discovering your personality!
             </p>
-            <button className="auth-btn register-btn" onClick={() => navigate('/register')}>
-              Take Test Now!
+            <button
+              className="auth-btn take-test-btn pulse"
+              onClick={() => navigate("/PersonalityTest")}
+            >
+              I'm Ready!
+            </button>
+            <button
+              className="close-btn"
+              onClick={() => setShowInstructions(false)}
+            >
+              ✕
             </button>
           </div>
+        </div>
+      )}
 
-          <div className="hero-badge">
-            <img src="/images/badge.png" alt="Personality Test Badge" />
+      <div className="about-us">
+      <div className="container">
+        <div className="row align-items-center">
+          {/* Left Side Images */}
+          <div className="col-lg-6">
+            <div className="about-us-images">
+              {/* About Image 1 */}
+              <div className="about-img-1">
+                <figure className="image-anime">
+                  <img src="images/about-img1.jpg" alt="About Us 1" />
+                </figure>
+              </div>
+
+              {/* About Image 2 */}
+              <div className="about-img-2">
+                <figure className="image-anime">
+                  <img src="images/hero-image.jpg" alt="About Us 2" />
+                </figure>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side Content */}
+          <div className="col-lg-6">
+            <div className="about-us-content">
+              {/* Section Title */}
+              <div className="section-title">
+                <h3 className="wow fadeInUp">about us</h3>
+                <h2
+                  className="text-anime-style-2"
+                  data-cursor="-opaque"
+                >
+                 Explore Your Personality, Find What Inspires You, Live Your Best Self
+                </h2>
+                <p
+                  className="wow fadeInUp"
+                  data-wow-delay="0.2s"
+                >
+                  Our platform is built to help you understand yourself better and live a more balanced life. By guiding minds through the Big Five Personality Test, we uncover your unique traits and provide personalized recommendations in movies, music, and books that truly connect with you.
+                </p>
+              </div>
+
+              {/* Vision & Mission */}
+              <div className="about-vision-mission">
+                {/* Vision */}
+                <div
+                  className="vision-mission-content wow fadeInUp"
+                  data-wow-delay="0.4s"
+                >
+                  <h3>our vision</h3>
+                  <p>
+                    Our vision is to create a world where self-discovery and personal growth are accessible to everyone. We aim to make personality insights, mood tracking, and personalized recommendations a stigma-free and empowering experience—helping individuals live with clarity, balance, and confidence.
+                  </p>
+                </div>
+
+                {/* Mission */}
+                <div
+                  className="vision-mission-content wow fadeInUp"
+                  data-wow-delay="0.4s"
+                >
+                  <h3>our mission</h3>
+                  <ul>
+                    <li>Guide Self-Discovery</li>
+                    <li>Promote Mental Wellness</li>
+                    <li>Empower Productivity</li>
+                  </ul>
+                </div>
+              </div>
+              {/* Vision & Mission End */}
+            </div>
           </div>
         </div>
-      </section>
-
-      {/* About Us Section */}
-<section>
-  <div className="about-us">
-    <div className="image">
-      <img src="/images/scientist.png" alt="Research Illustration" />
+      </div>
     </div>
-    <div className="about-us-content">
-      <p className="heading">About Us</p>
-      <h1 className="about-us-title">About Personality Finder</h1>
-      <p className="about-us-subtitle">
-        Our platform goes beyond traditional personality types. 
-        Using a unique blend of psychology and AI, we help you 
-        explore your strengths and discover tailored 
-        recommendations that fit your mood, interests, and personality. 
-      </p>
-
-      <ul className="about-us-list">
-        <li>✔ Scientifically backed personality framework</li>
-        <li>✔ AI-powered personalized recommendations</li>
-        <li>✔ Continuous updates with new insights</li>
-        <li>✔ Free access for everyone, anytime</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-      {/* Why Choose Us (moved before recommendations) */}
-      <section className="why-choose-us">
-        <h2>Why Choose Us</h2>
-        <p >
-        Our platform goes beyond traditional personality types. 
-        Using a unique blend of psychology and AI, we help you<br></br>
-        explore your strengths and discover tailored 
-        recommendations that fit your mood, interests, and personality. 
-      </p>
-
-        <div className="feature-grid">
-          <div className="feature-card">
-            <img src="/icons/accuracy.jpeg" alt="Accuracy Icon" />
-            <h4>High Accuracy</h4>
-            <p>Our AI-driven personality test provides highly accurate insights.</p>
+      <div className="our-services">
+      <div className="container">
+        <div className="row section-row align-items-center">
+          <div className="col-lg-6 col-md-9">
+            {/* Section Title */}
+            <div className="section-title">
+              <h3 className="wow fadeInUp">services</h3>
+              <h2 className="text-anime-style-2" data-cursor="-opaque">
+                Explore Our Features for Mind and Growth
+              </h2>
+            </div>
           </div>
-          <div className="feature-card">
-            <img src="/icons/free.jpeg" alt="Free Icon" />
-            <h4>Totally Free</h4>
-            <p>All features and tools are completely free to use — no hidden charges!</p>
-          </div>
-          <div className="feature-card">
-            <img src="/icons/easy.jpg" alt="Easy to Use Icon" />
-            <h4>Simple & Easy</h4>
-            <p>The test and dashboard are user-friendly and easy to navigate.</p>
+
+          <div className="col-lg-6 col-md-3">
+            {/* Section Button */}
+            <div
+              className="section-btn wow fadeInUp"
+              data-wow-delay="0.2s"
+            >
+              <Link to="/services" className="btn-default">
+                view all services
+              </Link>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* Recommendations Section */}
-      <section className="recommendations">
-        <h2>Top Recommendations</h2>
-        <p >
-        Our platform goes beyond traditional personality types. 
-        Using a unique blend of psychology and AI, we help you<br></br>
-        explore your strengths and discover tailored 
-        recommendations that fit your mood, interests, and personality. 
-      </p>
-        <div className="recommendation-cards">
-          <div className="recommendation-card">
-            <img src="/images/book.jpg" alt="Book Recommendation" />
-            <h3>Books</h3>
-            <p>Get book suggestions that match your personality traits and interests.</p>
+        <div className="row">
+          {/* Service Item 1 */}
+          <div className="col-lg-4 col-md-6">
+            <div
+              className="service-item wow fadeInUp"
+              data-wow-delay="0.2s"
+            >
+              <div className="service-image">
+                <Link to="/service-single" data-cursor-text="View">
+                  <figure className="image-anime">
+                    <img src="images/music.jfif" alt="Service 1" />
+                  </figure>
+                </Link>
+              </div>
+              <div className="service-content">
+                <h3>Music</h3>
+              </div>
+            </div>
           </div>
-          <div className="recommendation-card">
-            <img src="/images/music.jpeg" alt="Music Recommendation" />
-            <h3>Music</h3>
-            <p>Explore music styles and artists tailored to your vibe and energy.</p>
+
+          {/* Service Item 2 */}
+          <div className="col-lg-4 col-md-6">
+            <div
+              className="service-item wow fadeInUp"
+              data-wow-delay="0.4s"
+            >
+              <div className="service-image">
+                <Link to="/service-single" data-cursor-text="View">
+                  <figure className="image-anime">
+                    <img src="images/movie.jfif" alt="Service 2" />
+                  </figure>
+                </Link>
+              </div>
+              <div className="service-content">
+                <h3>Movies</h3>
+              </div>
+            </div>
           </div>
-          <div className="recommendation-card">
-            <img src="/images/movies.jpg" alt="Movies Recommendation" />
-            <h3>Movies</h3>
-            <p>Enjoy movie picks that align with your personality and preferences.</p>
+
+          {/* Service Item 3 */}
+          <div className="col-lg-4 col-md-6">
+            <div
+              className="service-item wow fadeInUp"
+              data-wow-delay="0.6s"
+            >
+              <div className="service-image">
+                <Link to="/service-single" data-cursor-text="View">
+                  <figure className="image-anime">
+                    <img src="images/book.jfif" alt="Service 3" />
+                  </figure>
+                </Link>
+              </div>
+              <div className="service-content">
+                <h3>Books</h3>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
-{/* ******** */}
-{/* Call To Action Section */}
-<section className="cta-section">
-  <div className="cta-overlay"></div>
-  <div className="cta-container">
-    
-    {/* Left Image */}
-    <div className="cta-image left">
-      <img src="/images/imgi_12_blue-personality-min-png.avif" alt="Self Growth" />
+      </div>
+    </div>
+  
+    <div className="why-choose-us">
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="why-choose-us-box">
+              {/* Why Choose Image Start */}
+              <div className="why-choose-image">
+                <figure className="image-anime reveal">
+                  <img src="/images/why-choose-us.jpg" alt="Why Choose Us" />
+                </figure>
+              </div>
+              {/* Why Choose Image End */}
+
+              {/* Why Choose Content Start */}
+              <div className="why-choose-content">
+                {/* Section Title */}
+                <div className="section-title">
+                  <h3 className="wow fadeInUp">why choose us</h3>
+                  <h2 className="text-anime-style-2" data-cursor="-opaque">
+                    Personalized guidance, meaningful growth
+                  </h2>
+                  <p className="wow fadeInUp" data-wow-delay="0.2s">
+                    With a commitment to self-discovery and personal growth, we empower individuals to create lasting positive change in their lives. Through the Big Five Personality Test, personalized recommendations, mood tracking, journaling, and daily tasks, our platform provides tools that inspire reflection, balance, and motivation every day.
+                  </p>
+                </div>
+
+                {/* Why Choose List */}
+                <div className="why-choose-list">
+                  <div className="why-choose-item wow fadeInUp">
+                    <div className="icon-box">
+                      <img src="/images/icon-why-choose-1.svg" alt="" />
+                    </div>
+                    <div className="why-choose-item-content">
+                      <h3>Commitment to Growth</h3>
+                    </div>
+                  </div>
+
+                  <div
+                    className="why-choose-item wow fadeInUp"
+                    data-wow-delay="0.2s"
+                  >
+                    <div className="icon-box">
+                      <img src="/images/icon-why-choose-2.svg" alt="" />
+                    </div>
+                    <div className="why-choose-item-content">
+                      <h3>Personalized Insights</h3>
+                    </div>
+                  </div>
+
+                  <div
+                    className="why-choose-item wow fadeInUp"
+                    data-wow-delay="0.4s"
+                  >
+                    <div className="icon-box">
+                      <img src="/images/icon-why-choose-3.svg" alt="" />
+                    </div>
+                    <div className="why-choose-item-content">
+                      <h3>Tailored Recommendations</h3>
+                    </div>
+                  </div>
+
+                  <div
+                    className="why-choose-item wow fadeInUp"
+                    data-wow-delay="0.6s"
+                  >
+                    <div className="icon-box">
+                      <img src="/images/icon-why-choose-4.svg" alt="" />
+                    </div>
+                    <div className="why-choose-item-content">
+                      <h3>Safe & Private</h3>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Why Choose Body */}
+                <div className="why-choose-body">
+                  <div className="why-choose-body-image">
+                    <figure className="image-anime reveal">
+                      <img src="/images/choose-us-img-2.jpg" alt="" />
+                    </figure>
+                  </div>
+
+                  <div className="why-choose-body-content wow fadeInUp">
+                    <h3>Explore, Reflect, Transform</h3>
+                    <p>
+                      Choosing us means choosing a platform dedicated to your self-discovery and growth. Our holistic approach combines psychology-based insights, personalized recommendations, and wellness tools to help you live with balance, confidence, and clarity.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              {/* Why Choose Content End */}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    {/* Content */}
-    <div className="cta-content">
-      <h2>Discover Yourself with Personality Finder</h2>
-      <p>
-        Our platform is designed to help you explore your unique personality 
-        using psychology and AI-driven insights.
-      </p>
-      <p className="cta-highlight">
-        Get personalized recommendations in books, music, and movies that match your mood and interests.
-      </p>
+
+    <div className="what-we-do">
+      <div className="container">
+        {/* Row with section title */}
+        <div className="row section-row align-items-center">
+          <div className="col-lg-6">
+            {/* Section Title */}
+            <div className="section-title">
+              <h3 className="wow fadeInUp">what we do</h3>
+              <h2
+                className="text-anime-style-2"
+                data-cursor="-opaque"
+              >
+               Guiding You Toward Balance and Well-Being
+              </h2>
+            </div>
+          </div>
+
+          <div className="col-lg-6">
+            {/* Section Content */}
+            <div
+              className="section-title-content wow fadeInUp"
+              data-wow-delay="0.2s"
+            >
+              <p>
+                We provide a platform to help you understand yourself and grow. Through the Big Five Personality Test, you can discover your unique traits, receive personalized recommendations for movies, music, and books, track your mood, write journals, and manage daily tasks—all in one place to support your personal growth and well-being.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Video Section */}
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="intro-video-box">
+              <div className="intro-bg-video">
+                {/* Background Video */}
+                <video autoPlay muted loop id="myVideo">
+                  <source
+                    src="https://demo.awaikenthemes.com/assets/videos/intro-bg-video.mp4"
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    {/* Right Image */}
-    <div className="cta-image right">
-      <img src="/images/imgi_28_0011_mb_thumbs_estp.png" alt="Mind Growth" />
+   <div className="how-it-work">
+      <div className="container">
+        {/* Section Title */}
+        <div className="row section-row align-items-center">
+          <div className="col-lg-6">
+            <div className="section-title">
+              <h3 className="wow fadeInUp">how it work</h3>
+              <h2 className="text-anime-style-2" data-cursor="-opaque">
+                Guiding you our therapy process
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        {/* Steps */}
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="how-work-step-box">
+              {/* Step 1 */}
+              <div className="how-work-step-item wow fadeInUp">
+                <div className="how-work-step-no">
+                  <h3>01</h3>
+                </div>
+                <div className="how-work-step-content">
+                  <h3>01.Take the Personality Test</h3>
+                  <p>Complete the Big Five Personality Test to uncover your unique personality traits.</p>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div
+                className="how-work-step-item wow fadeInUp"
+                data-wow-delay="0.2s"
+              >
+                <div className="how-work-step-no">
+                  <h3>02</h3>
+                </div>
+                <div className="how-work-step-content">
+                  <h3>02.View Your Results</h3>
+                  <p>Get instant insights about your personality in an easy-to-understand report.</p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div
+                className="how-work-step-item wow fadeInUp"
+                data-wow-delay="0.4s"
+              >
+                <div className="how-work-step-no">
+                  <h3>03</h3>
+                </div>
+                <div className="how-work-step-content">
+                  <h3>03. Explore Recommendations</h3>
+                  <p>Receive personalized suggestions for movies, music, and books tailored to your traits.</p>
+                </div>
+              </div>
+
+              {/* Step 4 */}
+              <div
+                className="how-work-step-item wow fadeInUp"
+                data-wow-delay="0.6s"
+              >
+                <div className="how-work-step-no">
+                  <h3>04</h3>
+                </div>
+                <div className="how-work-step-content">
+                  <h3>04. Track & Grow</h3>
+                  <p>Monitor your mood, write journals, and manage your daily tasks to support your personal growth.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
-      {/* Footer */}
-      <footer className="footer">
-        &copy; {new Date().getFullYear()} Personality Finder. All rights reserved.
-      </footer>
-    </div>
+
+       <footer className="main-footer">
+      <div className="footer-copyright">
+        <div className="row align-items-center">
+          <div className="col-md-12 text-center">
+            <div className="footer-copyright-text">
+              <p>Copyright © 2024 All Rights Reserved.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    </>
   );
 };
 

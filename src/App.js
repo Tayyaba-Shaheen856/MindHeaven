@@ -8,8 +8,7 @@ import ProfileTab from './components/ProfileTab';
 import RegisterPage from './components/RegisterPage';
 import PersonalityTest from './components/PersonalityTest';
 import Dashboard from './components/Dashboard';
-import ResetPasswordPage from './components/ResetPasswordPage'; // <-- import reset password page
-
+import ResetPasswordPage from './components/ResetPasswordPage';
 
 function App() {
   const token = localStorage.getItem('token');
@@ -19,17 +18,17 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
-
         <Route path="/forgot" element={<ForgotPage />} />
-        <Route path="/resetpage" element={<ResetPasswordPage />} />
+
+        {/* Reset password routes */}
+        <Route
+          path="/reset-password"
+          element={token ? <ResetPasswordPage /> : <Navigate to="/login" />}
+        />
+        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+
         <Route path="/mood" element={<MoodTrackingPage />} />
-       
         <Route path="/profile" element={<ProfileTab />} />
-        
-        
-
-
-
         <Route path="/register" element={<RegisterPage />} />
         <Route
           path="/personality"
@@ -39,20 +38,11 @@ function App() {
           path="/dashboard/*"
           element={token ? <Dashboard /> : <Navigate to="/login" />}
         />
-        {/* <Route
-          path="/reset-password"
-          element={token ? <ResetPasswordPage /> : <Navigate to="/login" />}
-        /> */}
-
-        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         {/* Redirect unknown routes */}
         <Route path="*" element={<Navigate to="/" />} />
-
       </Routes>
     </Router>
   );
 }
 
 export default App;
-
-
