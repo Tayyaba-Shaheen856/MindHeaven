@@ -1,50 +1,93 @@
+:root {
+  --background-color: #F4EAE1;
+  --main-color: #0c2f37;
+  --secondary-color: #F9F9F9;
+  --text-color: #838383;
+  --accent-color: #456445;
+  --white-color: #FFFFFF;
+  --divider-color: #EEEDED;
+  --dark-divider-color: #FFFFFF1A;
+  --default-font: "Sora", sans-serif;
+  --accent-font: "Marcellus", serif;
+  --button-gradient: linear-gradient(135deg, #CE5F61, #e0ad42);
+  --button-base: rgb(224, 173, 66);
+}
+
+/* =========================
+   Mood Page Wrapper
+========================= */
 .mood-page {
   min-height: 100vh;
   padding: 20px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--default-font);
+  background: var(--background-color);
   transition: background-color 0.5s ease;
 }
 
-h1 {
+/* =========================
+   Headings
+========================= */
+.mood-page h1 {
   text-align: center;
   margin-bottom: 25px;
+  font-family: var(--accent-font);
+  color: var(--main-color);
 }
 
+/* =========================
+   Sections
+========================= */
 .mood-section, .journal-section {
   display: flex;
   justify-content: center;
   gap: 10px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
+/* =========================
+   Inputs & Textarea
+========================= */
 select, input[type="text"], textarea {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  padding: 12px 15px;
+  border-radius: 12px;
+  border: none;
   font-size: 1rem;
+  width: 90%;
+  max-width: 400px;
+  box-sizing: border-box;
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.05);
 }
 
 textarea {
-  width: 400px;
   height: 120px;
   resize: vertical;
 }
 
+/* =========================
+   Buttons
+========================= */
 button {
-  padding: 8px 16px;
+  padding: 12px 25px;
   border: none;
-  background-color: #4dd0e1;
-  color: white;
+  border-radius: 12px;
+  font-size: 1rem;
   font-weight: bold;
-  border-radius: 8px;
+  color: var(--white-color);
+  background: var(--button-base);
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  animation: pulse 1.5s infinite;
 }
 
 button:hover {
-  background-color: #ff80ab;
+  background: var(--button-gradient);
+  transform: scale(1.05);
 }
 
+/* =========================
+   Entries Section
+========================= */
 .entries-section {
   max-width: 600px;
   margin: 0 auto;
@@ -56,8 +99,18 @@ button:hover {
 }
 
 .entries-section li {
-  background: rgba(255,255,255,0.7);
+  background: var(--white-color);
   margin-bottom: 10px;
   padding: 10px 15px;
-  border-radius: 10px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.05);
+}
+
+/* =========================
+   Animations
+========================= */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }

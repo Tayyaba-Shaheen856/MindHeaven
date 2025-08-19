@@ -43,7 +43,7 @@ const PersonalityTest = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const isRetake = !!location.state?.user; // true if retaking from ProfileInfo
+  const isRetake = !!location.state?.user;
   const totalSteps = questions.length;
 
   const handleAnswer = (value) => {
@@ -90,12 +90,8 @@ const PersonalityTest = () => {
         });
 
         const data = await res.json();
-        if (!res.ok) {
-          console.error("Backend error:", data);
-          throw new Error(data.error || "Failed to update personality");
-        }
+        if (!res.ok) throw new Error(data.error || "Failed to update personality");
 
-        // ✅ Navigate to dashboard after update
         navigate("/dashboard", { replace: true, state: { personality: data.personality } });
       } catch (err) {
         console.error("Error updating personality:", err);
@@ -110,19 +106,9 @@ const PersonalityTest = () => {
 
   return (
     <div className="quiz-wrapper">
-      
-      {/* <div className="progress-bar">
-        <div className="progress-fill" style={{ width: `${progress}%` }} />
-      </div> */}
-      
-  {/* Progress bar */}
-  <div className="progress">
-    <div
-      className="progress-bar"
-      style={{ width: `${progress}%` }}
-    />
-  </div>
-
+      <div className="progress">
+        <div className="progress-bar" style={{ width: `${progress}%` }} />
+      </div>
 
       {!finished && (
         <div className="card">
@@ -144,7 +130,6 @@ const PersonalityTest = () => {
         </div>
       )}
 
-      {/* Results */}
       {finished && (
         <div className="instructions-overlay">
           <div className="instructions-modal">
@@ -154,9 +139,19 @@ const PersonalityTest = () => {
                 ? "Your new personality will be updated."
                 : "Register to find out what matches your vibe ✨"}
             </p>
-            <button className="auth-btn take-test-btn pulse" onClick={handleSubmit}>
-              {isRetake ? "Update Profile" : "Register Now"}
-            </button>
+            <div className="result-buttons">
+              <button className="auth-btn take-test-btn pulse" onClick={handleSubmit}>
+                {isRetake ? "Update Profile" : "Register Now"}
+              </button>
+              {!isRetake && (
+                <button
+                  className="auth-btn already-user-btn"
+                  onClick={() => navigate("/login")}
+                >
+                  Already a user
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}

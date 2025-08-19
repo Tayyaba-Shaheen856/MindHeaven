@@ -1,51 +1,91 @@
+:root {
+  --background-color: #F4EAE1;
+  --main-color: #0c2f37;
+  --secondary-color: #F9F9F9;
+  --text-color: #838383;
+  --accent-color: #456445;
+  --white-color: #FFFFFF;
+  --divider-color: #EEEDED;
+  --dark-divider-color: #FFFFFF1A;
+  --default-font: "Sora", sans-serif;
+  --accent-font: "Marcellus", serif;
+  --button-gradient: linear-gradient(135deg, #CE5F61, #e0ad42);
+  --button-base: rgb(224, 173, 66);
+}
+
+/* =========================
+   Login Page Wrapper
+========================= */
 .login-page {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-   background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  background: var(--background-color);
   padding: 20px;
+  font-family: var(--default-font);
 }
 
+/* =========================
+   Login Container
+========================= */
 .login-container {
-  background: white;
+  background: var(--main-color);
   padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-shadow: 0px 10px 40px rgba(0,0,0,0.15);
   width: 100%;
   max-width: 400px;
   text-align: center;
+  animation: fadeIn 0.4s ease;
 }
 
 .login-container h2 {
   margin-bottom: 25px;
-  color: #333;
+  font-family: var(--accent-font);
+  color: var(--white-color);
 }
 
+/* =========================
+   Form Inputs
+========================= */
 form input {
   width: 90%;
   padding: 12px 15px;
   margin: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
-form button {
-  width: 98%;
-  padding: 12px;
-  background: linear-gradient(45deg, #ff4db8, #5f57e3);
-  color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 16px;
-  margin-top: 10px;
-  cursor: pointer;
-  transition: background 0.3s ease;
+  box-sizing: border-box;
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.05);
 }
 
+/* =========================
+   Form Button
+========================= */
+form button {
+  width: 90%;
+  padding: 12px 25px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--white-color);
+  background: var(--button-base);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: pulse 1.5s infinite;
+}
 
+form button:hover {
+  background: var(--button-gradient);
+  transform: scale(1.05);
+}
 
+/* =========================
+   Login Options Links
+========================= */
 .login-options {
   margin-top: 15px;
   display: flex;
@@ -53,23 +93,39 @@ form button {
 }
 
 .link-text {
-  color: #007bff;
+  color: var(--button-base);
   cursor: pointer;
   font-size: 14px;
+  text-decoration: underline;
 }
 
 .link-text:hover {
-  text-decoration: underline;
+  background: var(--button-gradient);
+  -webkit-background-clip: text; /* for Safari/Chrome */
+  background-clip: text;         /* standard property for other browsers */
+  -webkit-text-fill-color: transparent; /* for Safari/Chrome */
+  color: transparent;             /* fallback for other browsers */
 }
+
+/* =========================
+   Error Text
+========================= */
 .error-text {
   color: red;
   margin: 10px 0;
   font-weight: 600;
 }
 
-.link-text {
-  color: #007bff;
-  cursor: pointer;
-  text-decoration: underline;
-  margin-left: 5px;
+/* =========================
+   Animations
+========================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }

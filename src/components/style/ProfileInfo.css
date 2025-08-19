@@ -1,22 +1,53 @@
-.profile-container {
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  max-width: 600px;
-  margin: auto;
-  box-shadow: 0px 3px 15px rgba(0,0,0,0.1);
+:root {
+  --background-color: #F4EAE1;
+  --main-color: #0c2f37;
+  --secondary-color: #F9F9F9;
+  --text-color: #838383;
+  --accent-color: #456445;
+  --white-color: #FFFFFF;
+  --divider-color: #EEEDED;
+  --dark-divider-color: #FFFFFF1A;
+  --default-font: "Sora", sans-serif;
+  --accent-font: "Marcellus", serif;
+  --button-gradient: linear-gradient(135deg, #CE5F61, #e0ad42);
+  --button-base: rgb(224, 173, 66);
 }
 
+/* =========================
+   Profile Page Container
+========================= */
+.profile-container {
+  background: var(--white-color);
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 600px;
+  margin: 30px auto;
+  box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+  font-family: var(--default-font);
+}
+
+/* =========================
+   Headings
+========================= */
 .profile-container h2 {
   text-align: center;
   margin-bottom: 20px;
+  font-family: var(--accent-font);
+  color: var(--main-color);
 }
 
+/* =========================
+   Profile Details
+========================= */
 .profile-details p {
   font-size: 1rem;
   margin: 8px 0;
+  color: var(--text-color);
 }
 
+/* =========================
+   Actions / Buttons
+========================= */
 .profile-actions {
   display: flex;
   justify-content: center;
@@ -25,16 +56,28 @@
 }
 
 .profile-actions .btn {
-  padding: 10px 20px;
+  padding: 12px 25px;
   border: none;
-  background: #4dd0e1;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
+  background: var(--button-base);
+  color: var(--white-color);
+  border-radius: 12px;
   font-weight: bold;
-  transition: 0.3s;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: pulse 1.5s infinite;
 }
 
 .profile-actions .btn:hover {
-  background: #ff80ab;
+  background: var(--button-gradient);
+  transform: scale(1.05);
+}
+
+/* =========================
+   Animations
+========================= */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
