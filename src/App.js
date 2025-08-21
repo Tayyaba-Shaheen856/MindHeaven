@@ -30,10 +30,7 @@ function App() {
         <Route path="/mood" element={<MoodTrackingPage />} />
         <Route path="/profile" element={<ProfileTab />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route
-          path="/personality"
-          element={token ? <PersonalityTest /> : <Navigate to="/login" />}
-        />
+        <Route path="/personality" element={<PersonalityTest />} />
         <Route
           path="/dashboard/*"
           element={token ? <Dashboard /> : <Navigate to="/login" />}

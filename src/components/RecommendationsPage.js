@@ -1,8 +1,5 @@
-
 import React, { useEffect, useState } from 'react';
 import './style/RecommendationsPage.css';
-
-// const API_URL = "https://upgraded-space-lamp-x5q9xvxq4p6qhvw55-5000.app.github.dev";
 
 const RecommendationsPage = () => {
   const [books, setBooks] = useState([]);
@@ -14,43 +11,83 @@ const RecommendationsPage = () => {
 
   const token = localStorage.getItem('token');
 
+  // Fetch recommendations + favorites
   useEffect(() => {
-    const fetchRecommendations = async () => {
-      if (!token) {
-        setError('You must be logged in.');
-        setLoading(false);
-        return;
-      }
+    if (!token) {
+      setError('You must be logged in.');
+      setLoading(false);
+      return;
+    }
 
+    const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/auth/recommendations", {
+        // Recommendations
+        const recRes = await fetch("http://localhost:5000/api/auth/recommendations", {
           headers: { Authorization: `Bearer ${token}` }
         });
+        if (!recRes.ok) throw new Error("Failed to fetch recommendations.");
+        const recData = await recRes.json();
 
-        if (!res.ok) throw new Error('Failed to fetch recommendations.');
+        setBooks(recData.books || []);
+        setMusic(recData.songs || []);
+        setMovies(recData.movies || []);
 
-        const data = await res.json();
-
-        setBooks(data.books || []);
-        setMusic(data.songs || []); 
-        setMovies(data.movies || []);
+        // Favorites
+        const favRes = await fetch("http://localhost:5000/api/auth/favorites", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (favRes.ok) {
+          const favData = await favRes.json();
+          setFavorites(favData.filter(item => item.type === "fave"));
+        }
       } catch (err) {
         console.error(err);
-        setError('Failed to load recommendations.');
+        setError("Failed to load recommendations.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchRecommendations();
+    fetchData();
   }, [token]);
 
-  const toggleFavorite = (item) => {
-    setFavorites(prev =>
-      prev.find(f => f.title === item.title)
-        ? prev.filter(f => f.title !== item.title)
-        : [...prev, item]
-    );
+  // Add/remove favorite
+  const toggleFavorite = async (item) => {
+    if (!token) return;
+
+    try {
+      const existing = favorites.find(f => f.title === item.title);
+
+      if (existing) {
+        // Remove from DB
+        await fetch(`http://localhost:5000/api/auth/favorites/${existing._id}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setFavorites(prev => prev.filter(f => f.title !== item.title));
+      } else {
+        // Add to DB
+        const res = await fetch("http://localhost:5000/api/auth/favorites", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            title: item.title,
+            content: item.author || item.artist || item.director || "",
+            type: "fave",
+          }),
+        });
+
+        const data = await res.json();
+
+        setFavorites(prev => [...prev, { ...item, _id: data.favorite._id, type: "fave" }]);
+      }
+    } catch (err) {
+      console.error("Error toggling favorite:", err);
+    }
   };
 
   const renderCard = (item, type) => {

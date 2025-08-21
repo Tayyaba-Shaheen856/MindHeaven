@@ -2,11 +2,10 @@
   --background-color: #F4EAE1;
   --main-color: #0c2f37;
   --secondary-color: #F9F9F9;
-  --text-color: #838383;
+  --text-color: #000000;
   --accent-color: #456445;
   --white-color: #FFFFFF;
   --divider-color: #EEEDED;
-  --dark-divider-color: #FFFFFF1A;
   --default-font: "Sora", sans-serif;
   --accent-font: "Marcellus", serif;
   --button-gradient: linear-gradient(135deg, #CE5F61, #e0ad42);
@@ -14,80 +13,101 @@
 }
 
 /* =========================
-   Notes & Favorites Page Wrapper
+   Page Wrapper
 ========================= */
 .notes-favs-page {
   min-height: 100vh;
   padding: 20px;
   font-family: var(--default-font);
   background: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* =========================
-   Headings
+   Heading
 ========================= */
 .notes-favs-page h1 {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   font-family: var(--accent-font);
+  font-size: 2rem;
   color: var(--main-color);
 }
 
 /* =========================
-   Controls
+   Controls (Search + Filter)
 ========================= */
 .controls {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 15px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  width: 100%;
+  max-width: 700px;
 }
 
 .controls input[type="text"],
 .controls select {
-  padding: 12px 15px;
+  padding: 10px 15px;
   border-radius: 12px;
   border: none;
   font-size: 1rem;
-  box-shadow: 0px 5px 15px rgba(0,0,0,0.05);
+  background: var(--white-color);
+  color: var(--text-color);
   width: 250px;
-  max-width: 100%;
-  box-sizing: border-box;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 /* =========================
    Add Note Section
 ========================= */
 .add-note {
-  text-align: center;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
   margin-bottom: 25px;
+  width: 100%;
+  max-width: 700px;
 }
 
-.add-note input[type="text"] {
-  width: 300px;
-  max-width: 90%;
-  margin-right: 8px;
+.add-note input[type="text"],
+.add-note textarea {
   padding: 12px 15px;
   border-radius: 12px;
   border: none;
-  box-shadow: 0px 5px 15px rgba(0,0,0,0.05);
+  font-size: 1rem;
+  background: var(--white-color);
+  color: var(--text-color);
+  width: 300px;
+  max-width: 100%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.add-note textarea {
+  min-height: 100px;
+  resize: vertical;
 }
 
 /* =========================
    Buttons
 ========================= */
 button {
-  padding: 12px 25px;
+  padding: 10px 20px;
   border: none;
   border-radius: 12px;
-  font-size: 1rem;
-  font-weight: bold;
-  color: var(--white-color);
+  font-size: 0.95rem;
+  font-weight: 600;
   background: var(--button-base);
+  color: var(--white-color);
   cursor: pointer;
   transition: all 0.3s ease;
-  animation: pulse 1.5s infinite;
 }
 
 button:hover {
@@ -95,54 +115,87 @@ button:hover {
   transform: scale(1.05);
 }
 
+/* Star & Delete buttons inside cards */
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.star-btn,
+.delete-btn {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  background: var(--secondary-color);
+  color: var(--main-color);
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.star-btn:hover {
+  background: #ffe08a;
+}
+
+.delete-btn {
+  background: #ff6b6b;
+  color: #fff;
+}
+
+.delete-btn:hover {
+  background: #d9534f;
+}
+
 /* =========================
-   Items Display
+   Notes & Favorites Cards
 ========================= */
 .items-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
+  width: 100%;
+  max-width: 700px;
 }
 
-.note-card, .fav-card {
+.note-card,
+.fav-card {
   background: var(--white-color);
-  padding: 15px;
-  border-radius: 12px;
-  width: 80%;
-  max-width: 500px;
+  padding: 20px;
+  border-radius: 14px;
+  width: 100%;
   text-align: left;
-  box-shadow: 0px 5px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.note-card p, .fav-card a {
-  margin: 0 0 5px 0;
+.note-card:hover,
+.fav-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.note-card p,
+.fav-card p {
+  margin: 0 0 8px 0;
   word-break: break-word;
+}
+
+.fav-card a {
+  color: var(--main-color);
   text-decoration: none;
-  color: #333;
 }
 
 .fav-card a:hover {
-  text-decoration: underline;
   color: var(--button-base);
-}
-
-small {
-  font-size: 0.75rem;
-  color: #555;
+  text-decoration: underline;
 }
 
 .empty {
   text-align: center;
   color: #888;
   font-size: 1rem;
-}
-
-/* =========================
-   Animations
-========================= */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  margin-top: 20px;
 }
