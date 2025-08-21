@@ -1,19 +1,22 @@
 /* =========================
    Personality Test CSS
 ========================= */
-:root{
-	/* --primary-color			: #262626; */
-	--background-color      : #F4EAE1;
-  --main-color :#0c2f37;
-	--secondary-color		: #F9F9F9;
-	--text-color			: #838383;
-	--accent-color			: #456445;
-	--white-color			: #FFFFFF;
-	--divider-color			: #EEEDED;
-	--dark-divider-color	: #FFFFFF1A;
-	--default-font			: "Sora", sans-serif;
-	--accent-font			: "Marcellus", serif;
+:root {
+  --background-color: #F4EAE1;
+  --main-color: #0c2f37;
+  --secondary-color: #F9F9F9;
+  --text-color: #838383;
+  --accent-color: #456445;
+  --white-color: #FFFFFF;
+  --divider-color: #EEEDED;
+  --dark-divider-color: #FFFFFF1A;
+  --default-font: "Sora", sans-serif;
+  --accent-font: "Marcellus", serif;
 }
+
+/* =========================
+   Quiz Wrapper & Progress
+========================= */
 .quiz-wrapper {
   background: var(--background-color);
   min-height: 100vh;
@@ -26,19 +29,22 @@
 
 .progress {
   width: 100%;
-  height: 7px ;
-background-color:  rgb(224, 173, 66 , 0.4) !important;
+  height: 7px;
+  background-color: rgba(224, 173, 66, 0.4) !important;
   border-radius: 12px !important;
   margin-bottom: 20px;
 }
 
-.progress-bar{
+.progress-bar {
   height: 8px;
-  background: #456445 !important;
+  background: var(--accent-color) !important;
   border-radius: 4px;
   transition: width 0.3s ease;
 }
 
+/* =========================
+   Quiz Card
+========================= */
 .card {
   background: var(--main-color) !important;
   padding: 30px;
@@ -51,13 +57,13 @@ background-color:  rgb(224, 173, 66 , 0.4) !important;
 }
 
 .card h3 {
-  color:White;
+  color: var(--white-color);
 }
 
 .question-text {
   font-size: 1.2rem;
   margin: 20px 0;
-  color: white !important;
+  color: var(--white-color) !important;
 }
 
 .options-grid {
@@ -68,7 +74,7 @@ background-color:  rgb(224, 173, 66 , 0.4) !important;
 }
 
 .option-btn {
-  background-color:  rgb(224, 173, 66) !important;
+  background-color: rgb(224, 173, 66) !important;
   border: none;
   padding: 12px 20px;
   border-radius: 10px;
@@ -82,12 +88,15 @@ background-color:  rgb(224, 173, 66 , 0.4) !important;
 }
 
 .option-btn.selected {
-    background: linear-gradient(135deg, #CE5F61, #e0ad42) !important;
-  color: white;
+  background: linear-gradient(135deg, #CE5F61, #e0ad42) !important;
+  color: var(--white-color);
   font-weight: bold;
   transform: scale(1.1);
 }
 
+/* =========================
+   Animations
+========================= */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -99,8 +108,18 @@ background-color:  rgb(224, 173, 66 , 0.4) !important;
   }
 }
 
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
 /* =========================
-   Results Prompt Modal
+   Instructions / Modal
 ========================= */
 .instructions-overlay {
   position: fixed;
@@ -130,21 +149,21 @@ background-color:  rgb(224, 173, 66 , 0.4) !important;
 .instructions-modal h2 {
   font-size: 1.8rem;
   margin-bottom: 15px;
-  color: white;
+  color: var(--white-color);
 }
 
 .instructions-modal p {
   font-size: 1.1rem;
   margin-bottom: 25px;
-  color: white;
+  color: var(--white-color);
 }
 
 .auth-btn.take-test-btn {
- background-color:  rgb(224, 173, 66) !important;
+  background-color: rgb(224, 173, 66) !important;
   border: none;
   padding: 12px 25px;
   border-radius: 12px;
-  color: white;
+  color: var(--white-color);
   font-weight: bold;
   font-size: 1rem;
   cursor: pointer;
@@ -156,12 +175,30 @@ background-color:  rgb(224, 173, 66 , 0.4) !important;
   transform: scale(1.05);
 }
 
-.pulse {
-  animation: pulse 1.5s infinite;
+/* =========================
+   Already a user / Result buttons
+========================= */
+.result-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+.auth-btn.already-user-btn {
+  background-color: rgb(224, 173, 66) !important;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
+  color: var(--white-color);
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.auth-btn.already-user-btn:hover {
+  background: linear-gradient(135deg, #CE5F61, #e0ad42) !important;
+  transform: scale(1.05);
 }

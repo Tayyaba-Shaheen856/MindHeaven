@@ -1,25 +1,50 @@
+:root {
+  --background-color: #F4EAE1;
+  --main-color: #0c2f37;
+  --secondary-color: #F9F9F9;
+  --text-color: #838383;
+  --accent-color: #456445;
+  --white-color: #FFFFFF;
+  --divider-color: #EEEDED;
+  --dark-divider-color: #FFFFFF1A;
+  --default-font: "Sora", sans-serif;
+  --accent-font: "Marcellus", serif;
+  --button-gradient: linear-gradient(135deg, #CE5F61, #e0ad42);
+  --button-base: rgb(224, 173, 66);
+}
+
+/* =========================
+   Recommendations Page Wrapper
+========================= */
 .recommendations-container {
   min-height: 100vh;
   padding: 20px;
-  background: linear-gradient(135deg, #b2ebf2, #f8bbd0);
-   font-family: 'Playfair Display', 'Poppins', sans-serif;
+  background: var(--background-color);
+  font-family: var(--default-font);
 }
 
+/* =========================
+   Header
+========================= */
 .recommendations-header h1 {
   text-align: center;
   font-size: 2rem;
   font-weight: bold;
-   font-family: 'Playfair Display', 'Poppins', sans-serif;
+  font-family: var(--accent-font);
   margin-bottom: 15px;
+  color: var(--main-color);
 }
 
+/* =========================
+   Top Traits
+========================= */
 .top-traits {
   text-align: center;
   margin-bottom: 25px;
 }
 
 .trait-badge {
-  background: #ff80ab;
+  background: var(--button-base);
   color: white;
   padding: 5px 12px;
   border-radius: 15px;
@@ -27,6 +52,9 @@
   font-size: 0.9rem;
 }
 
+/* =========================
+   Card Grid
+========================= */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -35,12 +63,12 @@
 }
 
 .card {
-  background: white;
-  padding: 15px;
+  background: var(--white-color);
+  padding: 20px;
   border-radius: 15px;
   text-align: center;
-  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
-  transition: 0.3s;
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -48,7 +76,7 @@
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
 }
 
 .card-header {
@@ -79,35 +107,47 @@
 .card p {
   margin: 5px 0;
   font-size: 0.9rem;
-  color: #333;
+  color: var(--text-color);
 }
 
+/* =========================
+   Visit Button
+========================= */
 .visit-btn {
   display: inline-block;
   margin-top: 8px;
-  padding: 6px 12px;
-  background: #4dd0e1;
+  padding: 10px 20px;
+  background: var(--button-base);
   color: white;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 12px;
   font-weight: bold;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  animation: pulse 1.5s infinite;
 }
 
 .visit-btn:hover {
-  background: #ff80ab;
+  background: var(--button-gradient);
+  transform: scale(1.05);
 }
 
+/* =========================
+   Section Headings
+========================= */
 h2 {
   margin-top: 40px;
   margin-bottom: 15px;
   text-align: left;
   font-size: 1.5rem;
-  color: #333;
-  border-bottom: 2px solid #4dd0e1;
+  color: var(--main-color);
+  font-family: var(--accent-font);
+  border-bottom: 2px solid var(--accent-color);
   padding-bottom: 5px;
 }
 
+/* =========================
+   Loading / Error
+========================= */
 .loading, .error {
   text-align: center;
   font-size: 1.2rem;
@@ -118,7 +158,18 @@ h2 {
   color: red;
 }
 
-/* Responsive tweaks for smaller screens */
+/* =========================
+   Animations
+========================= */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* =========================
+   Responsive
+========================= */
 @media (max-width: 600px) {
   .card-grid {
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -127,7 +178,7 @@ h2 {
 
   .visit-btn {
     font-size: 0.8rem;
-    padding: 5px 10px;
+    padding: 8px 16px;
   }
 
   h2 {

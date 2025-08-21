@@ -1,16 +1,21 @@
-:root{
-	--background-color      : #F4EAE1;
-  --primary-color :#0c2f37;
-	--secondary-color		: #F9F9F9;
-	--text-color			: #838383;
-	--accent-color			: #456445;
-	--white-color			: #FFFFFF;
-	--divider-color			: #EEEDED;
-	--dark-divider-color	: #FFFFFF1A;
-	--default-font			: "Sora", sans-serif;
-	--accent-font			: "Marcellus", serif;
+:root {
+  --background-color: #F4EAE1;
+  --main-color: #0c2f37;
+  --secondary-color: #F9F9F9;
+  --text-color: #838383;
+  --accent-color: #456445;
+  --white-color: #FFFFFF;
+  --divider-color: #EEEDED;
+  --dark-divider-color: #FFFFFF1A;
+  --default-font: "Sora", sans-serif;
+  --accent-font: "Marcellus", serif;
+  --button-gradient: linear-gradient(135deg, #CE5F61, #e0ad42);
+  --button-base: rgb(224, 173, 66);
 }
 
+/* =========================
+   Register Page Wrapper
+========================= */
 .register-page {
   min-height: 100vh;
   display: flex;
@@ -18,62 +23,92 @@
   align-items: center;
   background: var(--background-color);
   padding: 20px;
-  margin: 0 auto !important;
-   font-family: 'Playfair Display', 'Poppins', sans-serif;
+  font-family: var(--default-font);
 }
 
+/* =========================
+   Form Container
+========================= */
 .form-container {
-  background: var(--primary-color);
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  background: var(--main-color);
+  padding: 40px 30px;
+  border-radius: 20px;
   width: 100%;
   max-width: 500px;
   text-align: center;
+  box-shadow: 0px 10px 40px rgba(0,0,0,0.15);
+  animation: fadeIn 0.4s ease;
 }
 
 .form-container h2 {
+  font-family: var(--accent-font);
+  font-size: 1.8rem;
   margin-bottom: 25px;
-  color: white;
+  color: var(--white-color);
   text-align: center;
   font-size: 30px !important;
 }
 
+/* =========================
+   Form Inputs
+========================= */
 .register-page form input,
 .register-page form select {
-  width: 90% !important;
+  width: 90%;
   padding: 12px 15px;
   margin: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: none;
+  border-radius: 12px;
   font-size: 16px;
   box-sizing: border-box;
 }
 
 .register-page form select {
-  width: 90% !important;
+  width: 90%;
 }
 
 .register-page form label {
   display: block;
   margin-top: 10px;
   font-weight: 600;
+  color: var(--white-color);
   text-align: left;
 }
 
+/* =========================
+   Submit / Register Button
+========================= */
 .register-page form button {
   width: 90%;
-  padding: 12px;
-  background-color:  rgb(224, 173, 66) !important;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  padding: 12px 25px;
   margin-top: 15px;
-  cursor: pointer;
-  transition: 0.3s ease;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--white-color);
+  background: var(--button-base) !important; /* base color */
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-align: center;
+  animation: pulse 1.5s infinite;
 }
 
 .register-page form button:hover {
-  background: linear-gradient(135deg, #CE5F61, #e0ad42) !important;
+  background: var(--button-gradient) !important; /* hover gradient */
+  transform: scale(1.05);
+}
+
+/* =========================
+   Animations
+========================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
