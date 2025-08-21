@@ -11,7 +11,6 @@ const NotesFavesPage = () => {
 
   const token = localStorage.getItem('token');
 
-  // Fetch all notes & favorites from backend
   useEffect(() => {
     if (!token) return;
 
@@ -25,7 +24,7 @@ const NotesFavesPage = () => {
           _id: item._id,
           title: item.title,
           content: item.content,
-          type: item.type, // 'note' or 'fave'
+          type: item.type,           // 'note' or 'fave'
           starred: item.type === 'fave'
         }));
 
@@ -39,7 +38,6 @@ const NotesFavesPage = () => {
     fetchItems();
   }, [token]);
 
-  // Add a new note (POST to backend)
   const addNote = async () => {
     if (!newNoteTitle.trim()) return;
 
@@ -58,7 +56,7 @@ const NotesFavesPage = () => {
         starred: false
       };
 
-      setItems([newItem, ...items]);
+      setItems(prev => [newItem, ...prev]);
       setNewNoteTitle('');
       setNewNoteContent('');
     } catch (err) {
@@ -66,7 +64,6 @@ const NotesFavesPage = () => {
     }
   };
 
-  // Toggle star (note ↔ fave) by updating type on backend
   const toggleStar = async (id) => {
     const item = items.find(i => i._id === id);
     if (!item || !token) return;
@@ -90,6 +87,18 @@ const NotesFavesPage = () => {
     }
   };
 
+  const deleteItem = async (id) => {
+    if (!token) return;
+    try {
+      await axios.delete(`http://localhost:5000/api/auth/favorites/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setItems(prev => prev.filter(i => i._id !== id));
+    } catch (err) {
+      console.error('Failed to delete item:', err);
+    }
+  };
+
   const filteredItems = items.filter(item => {
     if (filter === 'notes' && item.type !== 'note') return false;
     if (filter === 'faves' && item.type !== 'fave') return false;
@@ -98,7 +107,7 @@ const NotesFavesPage = () => {
   });
 
   return (
-    <div className="notes-faves-container">
+    <div className="notes-favs-page">
       <h1>Notes & Favorites</h1>
 
       {/* Add Note */}
@@ -118,8 +127,8 @@ const NotesFavesPage = () => {
         <button onClick={addNote}>Add Note</button>
       </div>
 
-      {/* Filters */}
-      <div className="filters">
+      {/* Controls (Search + Filter) */}
+      <div className="controls">
         <input
           type="text"
           placeholder="Search by title..."
@@ -134,17 +143,32 @@ const NotesFavesPage = () => {
       </div>
 
       {/* Items List */}
-      <div className="items-grid">
+      <div className="items-container">
         {filteredItems.map(item => (
-          <div key={item._id} className="item-card">
-            <h3>{item.title}</h3>
+          <div
+            key={item._id}
+            className={item.type === 'fave' ? 'fav-card' : 'note-card'}
+          >
+            <div className="item-header">
+              <p><strong>{item.title}</strong></p>
+              <div className="item-actions">
+                <button
+                  className={`star-btn ${item.starred ? 'starred' : ''}`}
+                  onClick={() => toggleStar(item._id)}
+                  title={item.starred ? 'Unfavorite' : 'Favorite'}
+                >
+                  ⭐
+                </button>
+                <button
+                  className="delete-btn"
+                  onClick={() => deleteItem(item._id)}
+                  title="Delete"
+                >
+                  🗑
+                </button>
+              </div>
+            </div>
             <p>{item.content}</p>
-            <button
-              className={`star-btn ${item.starred ? 'starred' : ''}`}
-              onClick={() => toggleStar(item._id)}
-            >
-              ⭐
-            </button>
           </div>
         ))}
       </div>

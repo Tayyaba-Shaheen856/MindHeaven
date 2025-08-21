@@ -65,10 +65,13 @@ const LandingPage = () => {
               <div className="hero-content-body">
                 {/* Hero Button Start */}
                 <div className="hero-btn wow fadeInUp" data-wow-delay="0.4s">
-                  <Link to="/personality" className="btn-default">
-                    Take A Test
-                  </Link>
-                </div>
+                   <button
+                   className="btn-default"
+                   onClick={() => setShowInstructions(true)}
+                   >
+                   Take A Test
+                   </button>
+                   </div>
                 {/* Hero Button End */}
               </div>
               {/* Hero Content Body End */}
