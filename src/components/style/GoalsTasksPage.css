@@ -31,6 +31,7 @@
   margin-bottom: 30px;
   font-family: var(--accent-font);
   color: var(--main-color);
+  font-weight: bold;
 }
 
 /* =========================
@@ -81,6 +82,11 @@ button:hover {
 /* =========================
    Task / Goal Cards
 ========================= */
+.tasks-section h2 , .goals-section h2{
+  font-size: 30px;
+}
+
+
 .tasks-section ul, .goal-card ul {
   list-style-type: none;
   padding: 0;
@@ -100,7 +106,11 @@ button:hover {
   text-decoration: line-through;
   color: #888;
 }
-
+.goals-section input[type="text"]{
+  color:var(--main-color) !important;
+  font-weight: 400;
+  font-size: 18px !important;
+}
 .goal-card {
   background: var(--main-color);
   color: var(--white-color);
