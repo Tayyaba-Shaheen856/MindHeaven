@@ -36,7 +36,8 @@
 /* =========================
    Sections
 ========================= */
-.tasks-section, .goals-section {
+.tasks-section,
+.goals-section {
   margin-bottom: 40px;
   text-align: center;
 }
@@ -81,19 +82,30 @@ button:hover {
 /* =========================
    Task / Goal Cards
 ========================= */
-.tasks-section ul, .goal-card ul {
+.tasks-section ul,
+.goal-card ul {
   list-style-type: none;
   padding: 0;
   margin-top: 15px;
 }
 
-.tasks-section li, .goal-card li {
+.tasks-section li,
+.goal-card li {
   padding: 10px 15px;
   background: var(--white-color);
   margin-bottom: 10px;
   border-radius: 12px;
   text-align: left;
   box-shadow: 0px 5px 15px rgba(0,0,0,0.05);
+}
+
+.goal-card li span {
+  color: #000; /* visible by default */
+}
+
+.goal-card li.completed span {
+  text-decoration: line-through;
+  color: #888; /* faded when completed */
 }
 
 .completed {
@@ -133,12 +145,24 @@ button:hover {
    Animations
 ========================= */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

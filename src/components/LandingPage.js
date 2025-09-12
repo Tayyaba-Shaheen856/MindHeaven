@@ -453,7 +453,7 @@ const LandingPage = () => {
             <div className="section-title">
               <h3 className="wow fadeInUp">how it work</h3>
               <h2 className="text-anime-style-2" data-cursor="-opaque">
-                Guiding you our therapy process
+                Guiding you our personalization process
               </h2>
             </div>
           </div>
