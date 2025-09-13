@@ -15,7 +15,7 @@ const LandingPage = () => {
         <nav className="navbar navbar-expand-lg">
           <div className="container">
   <Link className="navbar-brand" to="/">
-    <img src="images/logo2.png" alt="Logo" style={{ height: "40px" }} />
+    <img src="images/logo.png" alt="Logo" style={{ height: "40px" }} />
   </Link>
 
   <div className="ms-auto">
@@ -395,55 +395,7 @@ const LandingPage = () => {
     </div>
 
 
-    <div className="what-we-do">
-      <div className="container">
-        {/* Row with section title */}
-        <div className="row section-row align-items-center">
-          <div className="col-lg-6">
-            {/* Section Title */}
-            <div className="section-title">
-              <h3 className="wow fadeInUp">what we do</h3>
-              <h2
-                className="text-anime-style-2"
-                data-cursor="-opaque"
-              >
-               Guiding You Toward Balance and Well-Being
-              </h2>
-            </div>
-          </div>
-
-          <div className="col-lg-6">
-            {/* Section Content */}
-            <div
-              className="section-title-content wow fadeInUp"
-              data-wow-delay="0.2s"
-            >
-              <p>
-                We provide a platform to help you understand yourself and grow. Through the Big Five Personality Test, you can discover your unique traits, receive personalized recommendations for movies, music, and books, track your mood, write journals, and manage daily tasks—all in one place to support your personal growth and well-being.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Video Section */}
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="intro-video-box">
-              <div className="intro-bg-video">
-                {/* Background Video */}
-                <video autoPlay muted loop id="myVideo">
-                  <source
-                    src="https://demo.awaikenthemes.com/assets/videos/intro-bg-video.mp4"
-                    type="video/mp4"
-                  />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    
 
    <div className="how-it-work">
       <div className="container">
@@ -453,7 +405,7 @@ const LandingPage = () => {
             <div className="section-title">
               <h3 className="wow fadeInUp">how it work</h3>
               <h2 className="text-anime-style-2" data-cursor="-opaque">
-                Guiding you our personalization process
+                Guiding you our work process
               </h2>
             </div>
           </div>

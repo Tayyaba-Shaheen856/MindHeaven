@@ -42,13 +42,16 @@
 
 .form-container h2 {
   font-family: var(--accent-font);
-  font-size: 1.8rem;
+  font-size: 30px;
   margin-bottom: 25px;
   color: var(--white-color);
   text-align: center;
   font-size: 30px !important;
+  font-weight: bold;
 }
-
+.form-container input[type="text"]{
+    font-size: 18px !important ;
+}
 /* =========================
    Form Inputs
 ========================= */
@@ -73,6 +76,7 @@
   font-weight: 600;
   color: var(--white-color);
   text-align: left;
+
 }
 
 /* =========================
@@ -81,7 +85,7 @@
 .register-page form button {
   width: 90%;
   padding: 12px 25px;
-  margin-top: 15px;
+  margin: 15px 0;
   border: none;
   border-radius: 12px;
   font-size: 1rem;

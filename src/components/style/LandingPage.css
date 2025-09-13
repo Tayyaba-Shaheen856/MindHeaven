@@ -130,7 +130,7 @@ body{
 	background: var(--accent-color);
 	color: var(--white-color);
 	border-radius: 10px;
-	padding: 16px 20px;
+	padding: 16px 28px;
 	border: none;
 	overflow: hidden;
 	transition: all 0.6s ease-in-out;
@@ -234,7 +234,7 @@ body{
 .help-block.with-errors ul li{
 	color: var(--error-color);
 	font-weight: 500;
-	font-size: 16px;
+	font-size: 18px;
 }
 
 /************************************/
@@ -285,8 +285,8 @@ header.main-header .header-sticky.active::before{
 }
 
 .navbar{
-	padding: 30px 0;
 	align-items: center;
+	padding:0;
 }
 
 .navbar-brand{
@@ -294,22 +294,23 @@ header.main-header .header-sticky.active::before{
 	margin: 0;
 }
 .navbar-brand img{
-	 height: 100px; /* apni marzi ka size do */
-    width: auto;
-    background: transparent !important;
+	 height: 150px !important; /* apni marzi ka size do */
+    width: 100%;
+	object-fit: contain !important;
+   
 }
 
 header.main-header .ms-auto .btn{
 position: relative;
 	display: inline-block;
-	font-size: 16px;
+	font-size: 18px;
 	font-weight: 500;
 	line-height: 1.2em;
 	text-transform: capitalize;
 	background: var(--accent-color);
 	color: var(--white-color);
 	border-radius: 10px;
-	padding: 16px 20px;
+	padding: 16px 28px;
 	border: none;
 	overflow: hidden;
 	transition: all 0.6s ease-in-out;
@@ -452,8 +453,6 @@ header.main-header .ms-auto .btn:hover{
 
 .about-img-2 figure{
 	display: block;
-    /* mask-image: url(icons/about-img-2-bg-shape.svg);
-    background-image: url(icons/about-img-2-bg-shape.svg); */
     mask-size: cover;
     mask-position: center center;
     mask-repeat: no-repeat;
@@ -508,6 +507,9 @@ header.main-header .ms-auto .btn:hover{
 	margin-bottom: 20px;
 }
 
+.vision-mission-content ul li{
+	font-family: var(--default-font);
+}
 .vision-mission-content ul li:last-child{
 	margin-bottom: 0;
 }
@@ -820,6 +822,7 @@ header.main-header .ms-auto .btn:hover{
 	overflow: hidden;
 	text-align: center;
 	padding: 170px 100px 50px;
+	height:700px;
 }
 
 .intro-video-box::before{
@@ -971,12 +974,14 @@ header.main-header .ms-auto .btn:hover{
 }
 
 .how-work-step-content h3{
-	font-size: 20px;
+	font-size: 24px;
 	margin-bottom: 10px;
+	font-weight: bold;
 }
 
 .how-work-step-content p{
 	margin: 0;
+	color:#0C2F37;
 }
 
 .main-footer {

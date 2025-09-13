@@ -34,15 +34,17 @@
   margin-bottom: 20px;
   font-family: var(--accent-font);
   color: var(--main-color);
+  font-weight: bold;
+  font-size: 40px;
 }
 
 /* =========================
    Profile Details
 ========================= */
 .profile-details p {
-  font-size: 1rem;
+  font-size: 18px;
   margin: 8px 0;
-  color: var(--text-color);
+  color: var(--main-color);
 }
 
 /* =========================

@@ -41,9 +41,11 @@
 }
 
 .login-container h2 {
+  text-align: center;
   margin-bottom: 25px;
   font-family: var(--accent-font);
   color: var(--white-color);
+  font-weight: bold;
 }
 
 /* =========================
@@ -59,7 +61,10 @@ form input {
   box-sizing: border-box;
   box-shadow: 0px 5px 15px rgba(0,0,0,0.05);
 }
+.login-container form input[type="text"]{
+  font-size: 18px !important;
 
+}
 /* =========================
    Form Button
 ========================= */
@@ -67,6 +72,7 @@ form button {
   width: 90%;
   padding: 12px 25px;
   margin-top: 10px;
+  margin-bottom: 10px;
   border: none;
   border-radius: 12px;
   font-size: 1rem;
@@ -95,10 +101,13 @@ form button:hover {
 .link-text {
   color: var(--button-base);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 18px;
   text-decoration: underline;
 }
-
+p{
+  color:white;
+  font-size: 18px;
+}
 .link-text:hover {
   background: var(--button-gradient);
   -webkit-background-clip: text; /* for Safari/Chrome */

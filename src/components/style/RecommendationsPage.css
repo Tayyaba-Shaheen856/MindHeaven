@@ -26,13 +26,13 @@
 /* =========================
    Header
 ========================= */
-.recommendations-header h1 {
+.recommendations-container h1 {
   text-align: center;
-  font-size: 2rem;
+  font-size: 50px;
   font-weight: bold;
   font-family: var(--accent-font);
   margin-bottom: 15px;
-  color: var(--main-color);
+  color: var(--main-color) !important;
 }
 
 /* =========================
@@ -107,7 +107,7 @@
 .card p {
   margin: 5px 0;
   font-size: 0.9rem;
-  color: var(--text-color);
+  color: white;
 }
 
 /* =========================
@@ -148,6 +148,11 @@ h2 {
 /* =========================
    Loading / Error
 ========================= */
+p.loading{
+ color:#0c2f37;
+ font-size: 20px;
+ font-weight: 500;
+}
 .loading, .error {
   text-align: center;
   font-size: 1.2rem;
