@@ -16,32 +16,31 @@ const ProfileInfo = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Fetch profile from backend
-  const fetchProfile = async () => {
-    if (!token) return;
-
-    try {
-      const res = await fetch("http://localhost:5000/api/auth/profile", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!res.ok) throw new Error("Failed to fetch profile");
-
-      const data = await res.json();
-      setUser({
-        name: data.name || "",
-        email: data.email || "",
-        age: data.age || "",
-        gender: data.gender || "",
-        dob: data.dob ? new Date(data.dob).toLocaleDateString() : "",
-        personality: data.personality || "",
-      });
-    } catch (err) {
-      console.error("Error fetching profile:", err);
-    }
-  };
-
   // Fetch profile on mount and whenever location changes
   useEffect(() => {
+    const fetchProfile = async () => {
+      if (!token) return;
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error("Failed to fetch profile");
+
+        const data = await res.json();
+        setUser({
+          name: data.name || "",
+          email: data.email || "",
+          age: data.age || "",
+          gender: data.gender || "",
+          dob: data.dob ? new Date(data.dob).toLocaleDateString() : "",
+          personality: data.personality || "",
+        });
+      } catch (err) {
+        console.error("Error fetching profile:", err);
+      }
+    };
+
     fetchProfile();
   }, [token, location]);
 
@@ -52,7 +51,6 @@ const ProfileInfo = () => {
 
   // Navigate to Reset Password page for logged-in user
   const handleChangePassword = () => {
-    // logged-in user flow
     navigate("/reset-password");
   };
 
